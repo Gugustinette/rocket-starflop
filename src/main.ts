@@ -24,6 +24,13 @@ import Craft from './classes/Craft'
     intensity: 3,
     shadowQuality: 12,
   })
+
+  new FDirectionalLight(scene, {
+    position: { x: 0, y: 20, z: 50 },
+    color: 0xFFFFFF,
+    intensity: 2,
+    shadowQuality: 12,
+  })
   // Add ambient light
   new FAmbientLight(scene, {
     color: 0x404040,
@@ -31,10 +38,10 @@ import Craft from './classes/Craft'
   })
 
   // Load game
-  loadGame()
+  loadGame(scene)
 
   // Create craft
-  new Craft(scene)
+  const craft = new Craft(scene)
 
   // Create a death zone
   const deathZone = new FComponentEmpty(scene, {
