@@ -4,6 +4,7 @@ import { fDebug } from '@fibbojs/devtools'
 import './style.css'
 import Character from './classes/Character'
 import { loadGame } from './loadGame'
+import Craft from './classes/Craft'
 
 (async () => {
   // Initialize the scene
@@ -31,6 +32,9 @@ import { loadGame } from './loadGame'
 
   // Load game
   loadGame()
+
+  // Create craft
+  new Craft(scene)
 
   // Create a death zone
   const deathZone = new FComponentEmpty(scene, {
