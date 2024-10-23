@@ -3,6 +3,7 @@ import { FKeyboard } from '@fibbojs/event'
 import { fDebug } from '@fibbojs/devtools'
 import './style.css'
 import Character from './classes/Character'
+import { loadGame } from './loadGame'
 
 (async () => {
   // Initialize the scene
@@ -27,6 +28,9 @@ import Character from './classes/Character'
     color: 0x404040,
     intensity: 20,
   })
+
+  // Load game
+  loadGame()
 
   // Create a death zone
   const deathZone = new FComponentEmpty(scene, {

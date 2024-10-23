@@ -16,6 +16,10 @@ npm install
 npm run dev
 ```
 
+## GDD
+
+![gdd](./gdd.png)
+
 ## Crédits
 
 Les assets proviennet tous des packs suivants :
