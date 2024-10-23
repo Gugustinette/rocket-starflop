@@ -1,14 +1,9 @@
 import { FGLB } from '@fibbojs/3d'
 import type { FScene } from '@fibbojs/3d'
 
-class HangarBOptions {
-    public position: { x: number, y: number, z: number };
-    public scale: { x: number, y: number, z: number };
-
-    constructor() {
-        this.position = { x: 0, y: 0, z: 0 };
-        this.scale = { x: 1, y: 1, z: 1 };
-    }
+interface HangarBOptions {
+    position: { x: number, y: number, z: number };
+    scale: { x: number, y: number, z: number };
 }
 
 export default class HangarB extends FGLB {

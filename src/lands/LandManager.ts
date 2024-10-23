@@ -21,7 +21,7 @@ export class LandManager {
         this.add(new FlatLand(this.scene))
     }
 
-    onFrame(delta: number) {
+    frame(delta: number) {
         if(delta > 0) {
             this.counter += delta * 10000 * 10;
 
