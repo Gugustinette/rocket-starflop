@@ -1,15 +1,15 @@
 {
-  "name": "starter-3d",
+  "name": "rocket-starflop",
   "type": "module",
   "version": "0.0.1",
   "private": true,
   "author": "John Doe <john.doe@fibbo.js>",
-  "homepage": "https://johndoe.github.io/starter-3d",
+  "homepage": "https://gugustinette.github.io/rocket-starflop",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/johndoe/starter-3d.git"
+    "url": "git+https://github.com/gugustinette/rocket-starflop.git"
   },
-  "bugs": "https://github.com/johndoe/starter-3d/issues",
+  "bugs": "https://github.com/gugustinette/rocket-starflop/issues",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
