@@ -2,6 +2,11 @@
 
 Le jeu de fou là
 
+## Author
+
+Augustin Mercier et Maël Caubere
+
+
 ## Développment
 
 - Installation des dépendances
