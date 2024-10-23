@@ -1,22 +1,16 @@
-# starter-3d
-A 3d game starter based on Vite
+# Rocket Starflop
 
-## Usage
+Le jeu de fou là
 
-- Clone the repository
+## Développment
 
-```bash
-npx tiged fibbojs/starter-3d starter-3d
-```
-
-- Install the dependencies
+- Installation des dépendances
 
 ```bash
-cd starter-3d
 npm install
 ```
 
-- Start the development server
+- Lancement du serveur de développement
 
 ```bash
 npm run dev
