@@ -1,4 +1,4 @@
-import type {FModel, FScene} from '@fibbojs/3d'
+import type {FScene} from '@fibbojs/3d'
 import Ground from "../classes/Ground.ts";
 import {Land} from "./Land.ts";
 import Barrels from "../classes/Barrels.ts";
@@ -11,7 +11,7 @@ class FlatLandOptions {
 }
 
 export default class FlatLand extends Land {
-    constructor(scene: FScene, options: FlatLandOptions) {
+    constructor(scene: FScene, options?: FlatLandOptions) {
         super();
         if(!options) {
             options = new FlatLandOptions();

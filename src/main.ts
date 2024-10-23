@@ -41,7 +41,7 @@ import Craft from './classes/Craft'
   loadGame(scene)
 
   // Create craft
-  const craft = new Craft(scene)
+  new Craft(scene)
 
   // Create a death zone
   const deathZone = new FComponentEmpty(scene, {

@@ -4,6 +4,11 @@ import type { FScene } from '@fibbojs/3d'
 class HangarBOptions {
     public position: { x: number, y: number, z: number };
     public scale: { x: number, y: number, z: number };
+
+    constructor() {
+        this.position = { x: 0, y: 0, z: 0 };
+        this.scale = { x: 1, y: 1, z: 1 };
+    }
 }
 
 export default class HangarB extends FGLB {
