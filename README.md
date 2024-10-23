@@ -27,6 +27,6 @@ npm run dev
 
 ## Crédits
 
-Les assets proviennet tous des packs suivants :
+Les assets proviennent tous des packs suivants :
 - https://kenney.nl/assets/space-kit
 - https://kenney.nl/assets/space-station-kit
