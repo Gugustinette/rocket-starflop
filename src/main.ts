@@ -1,10 +1,10 @@
-import { FAmbientLight, FComponentEmpty, FCuboid, FDirectionalLight, FGameCamera, FRigidBodyType, FScene } from '@fibbojs/3d'
+import { FAmbientLight, FComponentEmpty, FCuboid, FDirectionalLight, FFixedCamera, FGameCamera, FRigidBodyType, FScene } from '@fibbojs/3d'
 import { FKeyboard } from '@fibbojs/event'
 import { fDebug } from '@fibbojs/devtools'
 import './style.css'
-import Character from './classes/Character'
 import { loadGame } from './loadGame'
-import Craft from './classes/Craft'
+import Craft from './classes/craft/Craft'
+import { CraftController } from './classes/craft/CraftControllerDebug'
 
 (async () => {
   // Initialize the scene
@@ -60,21 +60,33 @@ import Craft from './classes/Craft'
   })
   ground.setColor(0x348C31)
 
-  // Create a character
-  const character = new Character(scene)
+  // Create the craft
+  const craft = new Craft(scene)
 
-  // Attach a camera to the character
-  scene.camera = new FGameCamera(scene, { target: character })
+  // Create the camera
+  scene.camera = new FFixedCamera(scene, {
+    position: { x: 0, y: 12, z: 20 },
+    rotationDegree: { x: -10, y: 0, z: 0 },
+  })
 
   // Add collision events
-  character.onCollisionWith(deathZone, () => {
-    console.log('Character fell into the death zone!')
-    character.transform.position = { x: 0, y: 10, z: 0 }
+  craft.onCollisionWith(deathZone, () => {
+    console.log('Craft fell into the death zone!')
+    craft.transform.position = { x: 0, y: 10, z: 0 }
   })
 
   // Create keyboard
   const keyboard = new FKeyboard(scene)
   keyboard.onKeyDown('p', () => {
-    character.transform.position = { x: 0, y: 5, z: 0 }
+    craft.transform.position = { x: 0, y: 5, z: 0 }
   })
+
+  if (false) {
+    craft.controller = new CraftController(scene, { 
+      component: craft 
+    })
+    scene.camera = new FGameCamera(scene, {
+      target: craft,
+    })
+  }
 })()
