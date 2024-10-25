@@ -13,10 +13,9 @@ export class Scene extends FScene {
     super.init();
 
     // Set the background color of the scene
-    this.scene.background = new THREE.Color(0x000000);
+    this.scene.background = new THREE.Color(0x251733);
     // Set the fog to the same color as the background
-    this.scene.fog = new THREE.Fog(0x000000, 0, 700);
-
+    this.scene.fog = new THREE.Fog(0x251733, 0, 700);
 
     // Create outline effect
     this.effect = new OutlineEffect(this.renderer);
@@ -43,5 +42,15 @@ export class Scene extends FScene {
       color: 0x404040,
       intensity: 20,
     })
+
+    // Sky box from : https://www.freepik.com/free-photo/outer-space-background_4100956.htm#fromView=search&page=1&position=4&uuid=b34e88e9-22bd-489a-aa87-7bf0088ff78f
+    const loader = new THREE.TextureLoader();
+    const texture = loader.load(
+      '/rocket-starflop/assets/sky.jpg',
+      () => {
+        texture.mapping = THREE.EquirectangularReflectionMapping;
+        texture.colorSpace = THREE.SRGBColorSpace;
+        this.scene.background = texture;
+      });
   }
 }
