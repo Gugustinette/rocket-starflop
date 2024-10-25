@@ -75,7 +75,7 @@ export class CraftController extends FController {
     if (import.meta.env.DEV)
       this.shootSound = new Audio('rocket-starflop/assets/shoot.wav')
     else
-      this.shootSound = new Audio('/assets/shoot.wav')
+      this.shootSound = new Audio('assets/shoot.wav')
 
     // Create a cursor instance
     this.cursor = new CraftCursor()
