@@ -1,13 +1,15 @@
 import type {FScene} from '@fibbojs/3d'
-import Ground from "../classes/Ground.ts";
+import Ground from "../classes/btp/Ground.ts";
 import {Land} from "./Land.ts";
-import Barrels from "../classes/Barrels.ts";
-import HangarB from "../classes/HangarB.ts";
+import Barrels from "../classes/btp/Barrels.ts";
+import HangarB from "../classes/btp/HangarB.ts";
+import {randomInt} from "../classes/util/Random.ts";
 
 class FlatLandOptions {
-    public length: number = 200;
-    public width: number = 200;
-    public departure: number = -200;
+    // public length: number = 200;
+    // public width: number = 200;
+    // public departure: number = -200;
+    public position: number = 1;
 }
 
 export default class FlatLand extends Land {
@@ -16,9 +18,9 @@ export default class FlatLand extends Land {
         if(!options) {
             options = new FlatLandOptions();
         }
-        const LENGTH = options.length ?? 200;
-        const WIDTH = options.width ?? 50;
-        const DEPARTURE = options.departure ?? -200;
+        const LENGTH = 400;
+        const WIDTH = 600;
+        const DEPARTURE = options.position * -300;
 
         let ground = new Ground(scene, {
             position: {
@@ -33,11 +35,13 @@ export default class FlatLand extends Land {
             }
         });
 
+        let negativeXPositionBarrel = randomInt(0, 1)
+
         const barrels = new Barrels(scene, {
             position: {
-                x: 0,
+                x: negativeXPositionBarrel ? randomInt(-50, -5) : randomInt(5, 50),
                 y: 0,
-                z: DEPARTURE + 100,
+                z: DEPARTURE + LENGTH + randomInt(-20, 100),
             },
             scale: {
                 x: 12,
@@ -48,9 +52,9 @@ export default class FlatLand extends Land {
 
         const hangarLargeB = new HangarB(scene, {
             position: {
-                x: -20,
+                x: !negativeXPositionBarrel ? randomInt(-50, -5) : randomInt(5, 50),
                 y: 0,
-                z: DEPARTURE / 2 + 40,
+                z: DEPARTURE + LENGTH + randomInt(-20, 100),
             },
             scale: {
                 x: 8,

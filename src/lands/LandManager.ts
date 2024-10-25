@@ -1,49 +1,67 @@
 import {Land} from "./Land.ts";
 import FlatLand from "./FlatLand.ts";
 import {FScene} from '@fibbojs/3d'
+import {Queue} from "../classes/util/Queue.ts";
 
 export class LandManager {
     scene: FScene;
-    lands: Land[]
-    counter: number;
+    lands: Queue<Land>;
+    counter: number = 0;
+    __SIZE__ = 5;
 
     constructor(scene: FScene) {
         this.scene = scene;
-        this.lands = [];
-        this.counter = 0;
+        this.lands = new Queue<Land>();
+        this.lands.add(new FlatLand(this.scene, {
+            position: 1
+        }));
+        this.lands.add(new FlatLand(this.scene, {
+            position: 2
+        }));
+        this.lands.add(new FlatLand(this.scene, {
+            position: 3
+        }));
+        this.lands.add(new FlatLand(this.scene, {
+            position: 4
+        }));
+        this.lands.add(new FlatLand(this.scene, {
+            position: 5
+        }));
+
     }
 
     add(land: Land) {
-        this.lands.push(land);
+        this.lands.add(land);
     }
 
     generate() {
-        this.add(new FlatLand(this.scene))
+        this.add(new FlatLand(this.scene, {
+            position: this.__SIZE__
+        }));
     }
 
     frame(delta: number) {
-        if(delta > 0) {
+        if(delta >= 0) {
             this.counter += delta * 10000 * 10;
 
-            if(this.counter < 1000) {
+            if(this.counter < 1500) {
                 return;
-            }
-            this.counter = 0;
-
-            if(this.lands.length === 0) {
-                this.generate();
             }
 
             this.lands.forEach(land => {
                 land.move();
             });
 
-            if (this.lands[0].parcels[0].transform.z > -100) {
-                let land = this.lands.shift();
+            let lastLand = this.lands.peek();
+            if (lastLand && lastLand.getZ() >= -1) {
+                let land = this.lands.remove();
                 if (land) {
                     land.delete();
+                    this.generate();
                 }
             }
+
+            this.counter = 0;
         }
     }
 }

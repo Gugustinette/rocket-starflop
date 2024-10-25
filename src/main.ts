@@ -1,4 +1,4 @@
-import { FAmbientLight, FDirectionalLight, FFixedCamera, FGameCamera } from '@fibbojs/3d'
+import { FFixedCamera, FGameCamera } from '@fibbojs/3d'
 import { FKeyboard } from '@fibbojs/event'
 import { fDebug } from '@fibbojs/devtools'
 import './style.css'
@@ -17,26 +17,6 @@ import { Scene } from './Scene'
   // Debug the scene
   if (import.meta.env.DEV)
     fDebug(scene)
-
-  // Add directional light to represent the sun
-  new FDirectionalLight(scene, {
-    position: { x: 20, y: 20, z: 0 },
-    color: 0xFFFFFF,
-    intensity: 3,
-    shadowQuality: 12,
-  })
-
-  new FDirectionalLight(scene, {
-    position: { x: 0, y: 20, z: 50 },
-    color: 0xFFFFFF,
-    intensity: 2,
-    shadowQuality: 12,
-  })
-  // Add ambient light
-  new FAmbientLight(scene, {
-    color: 0x404040,
-    intensity: 20,
-  })
 
   // Load game
   loadGame(scene)

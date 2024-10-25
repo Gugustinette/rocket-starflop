@@ -14,4 +14,8 @@ export abstract class Land {
             parcel.scene.removeComponent(parcel);
         });
     }
+
+    getZ() {
+        return this.parcels[0].transform.z;
+    }
 }

@@ -1,15 +1,16 @@
-import { FGLB } from '@fibbojs/3d'
 import type { FScene } from '@fibbojs/3d'
+import {FGLBToon} from "../util/FGLBToon.ts";
 
-interface BarrelOptions {
+export interface BTPOptions {
     position: { x: number, y: number, z: number };
     scale: { x: number, y: number, z: number };
+    name: string;
 }
 
-export default class Barrels extends FGLB {
-    constructor(scene: FScene, options: BarrelOptions) {
+export abstract class BTP extends FGLBToon {
+    protected constructor(scene: FScene, options: BTPOptions) {
         super(scene, {
-            name: 'barrels',
+            name: options.name,
             position: options.position,
             scale: options.scale,
         })

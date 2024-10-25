@@ -7,7 +7,7 @@ export interface LaserBulletOptions {
   color?: THREE.Color
 }
 
-const BULLET_SPEED = 2
+const BULLET_SPEED = 10
 
 export class LaserBullet extends FComponent {
   __MESH__: THREE.Mesh
@@ -62,7 +62,7 @@ export class LaserBullet extends FComponent {
     this.transform.__ROTATION__ = new THREE.Euler().setFromQuaternion(this.__MESH__.quaternion)
 
     // Define the bullet's lifespan
-    this.lifespan = 100
+    this.lifespan = 200
     this.initialLifespan = this.lifespan
 
     // Create sensor
