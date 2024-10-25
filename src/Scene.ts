@@ -24,13 +24,16 @@ export class Scene extends FScene {
       this.effect.render(this.scene, this.camera.__CAMERA__);
     })
 
-    // Add directional light to represent the sun
-    new FDirectionalLight(this, {
-      position: { x: 20, y: 20, z: 0 },
+    // Add directional lights to represent the sun
+    const sun = new FDirectionalLight(this, {
+      position: { x: 100, y: 50, z: 0 },
       color: 0xF9F6FF,
       intensity: 3,
       shadowQuality: 12,
     })
+    // Expand the light to cover the whole scene
+    // @ts-ignore
+    sun.__LIGHT__.shadow.camera.right = 1000
     // Add ambient light
     new FAmbientLight(this, {
       color: 0x403B50,
