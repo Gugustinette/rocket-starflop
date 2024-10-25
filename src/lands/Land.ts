@@ -5,7 +5,7 @@ export interface LandOptions {
 }
 
 export abstract class Land {
-    __LENGTH__ = 450;
+    __LENGTH__ = 1000;
     __WIDTH__ = 600;
     __DEPARTURE_MULTIPLIER__ = -300;
     __DEPARTURE__ = 0;

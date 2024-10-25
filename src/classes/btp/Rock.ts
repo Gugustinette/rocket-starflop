@@ -62,13 +62,12 @@ export class RockCrystalsLargeB extends BTP {
     }
 }
 
-
 export function createLargeRock(scene: FScene, options: BTPOptions) {
     let size = randomInt(20, 50);
     options.scale = {
         x: size,
-        y: randomInt(30, 100),
-        z: size
+        y: randomInt(30, 70),
+        z: size * randomInt(1, 5)
     }
 
     let random = randomInt(0, 5);
@@ -88,4 +87,19 @@ export function createLargeRock(scene: FScene, options: BTPOptions) {
         return new RockCrystalsLargeB(scene, options);
     }
     return new Rock(scene, options);
+}
+
+export function createMontain(scene: FScene, options: BTPOptions) {
+    let size = randomInt(50, 100);
+    options.scale = {
+        x: size - randomInt(0, 20),
+        y: randomInt(70, 110),
+        z: size * randomInt(1, 5)
+    }
+
+    if(randomInt(0,1) === 0) {
+        return new RockLargeA(scene, options);
+    }
+
+    return new RockLargeB(scene, options);
 }
