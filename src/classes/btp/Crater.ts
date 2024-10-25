@@ -1,5 +1,6 @@
 import {BTP, BTPOptions} from "./BTP.ts";
 import {randomInt} from "../util/Random.ts";
+import {FScene} from "@fibbojs/3d";
 
 export class Crater extends BTP {
     constructor(scene: FScene, options: BTPOptions) {

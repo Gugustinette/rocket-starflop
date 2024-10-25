@@ -3,16 +3,16 @@ import {FGLBToon} from "../util/FGLBToon.ts";
 
 export interface BTPOptions {
     position: { x: number, y: number, z: number };
-    scale: { x: number, y: number, z: number };
-    name: string;
+    scale?: { x: number, y: number, z: number };
+    name?: string;
 }
 
 export abstract class BTP extends FGLBToon {
     protected constructor(scene: FScene, options: BTPOptions) {
         super(scene, {
-            name: options.name,
+            name: options.name ?? '',
             position: options.position,
-            scale: options.scale,
+            scale: options.scale ?? {x: 1, y: 1, z: 1}
         })
     }
 

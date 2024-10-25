@@ -92,9 +92,9 @@ export function createLargeRock(scene: FScene, options: BTPOptions) {
 export function createMontain(scene: FScene, options: BTPOptions) {
     let size = randomInt(50, 100);
     options.scale = {
-        x: size - randomInt(0, 20),
+        x: size - 15,
         y: randomInt(70, 110),
-        z: size * randomInt(1, 5)
+        z: size
     }
 
     if(randomInt(0,1) === 0) {

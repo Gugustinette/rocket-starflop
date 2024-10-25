@@ -1,6 +1,6 @@
 import type {FScene} from '@fibbojs/3d'
 import Ground from "../classes/btp/Ground.ts";
-import {Land} from "./Land.ts";
+import {Land, LandOptions} from "./Land.ts";
 import Barrels from "../classes/btp/Barrels.ts";
 import {createHangar} from "../classes/btp/Hangar.ts";
 import {randomInt} from "../classes/util/Random.ts";
@@ -8,13 +8,13 @@ import {createCrater} from "../classes/btp/Crater.ts";
 import {createLargeRock, createMontain} from "../classes/btp/Rock.ts";
 
 export default class FlatLand extends Land {
-    constructor(scene: FScene, options: FlatLandOptions) {
+    constructor(scene: FScene, options: LandOptions) {
         super(scene, options);
 
         let negativeXPositionBarrel = randomInt(0, 1)
         this.addGround();
-        this.addBarrels(negativeXPositionBarrel);
-        this.addHangar(!negativeXPositionBarrel);
+        this.addBarrels(negativeXPositionBarrel == 1);
+        this.addHangar(negativeXPositionBarrel == 0);
         this.addCraters();
         this.addRocks();
 
@@ -79,10 +79,10 @@ export default class FlatLand extends Land {
     }
 
     addRocks() {
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < randomInt(5, 20); i++) {
             let rock = createLargeRock(this.scene, {
                 position: {
-                    x: randomInt(50, 90) * (randomInt(0, 1) === 0 ? -1 : 1) - 30,
+                    x: randomInt(60, 80) * (randomInt(0, 1) === 0 ? -1 : 1) - 30,
                     y: 0,
                     z: this.__DEPARTURE__ + this.__LENGTH__ + randomInt(-150, 150),
                 }

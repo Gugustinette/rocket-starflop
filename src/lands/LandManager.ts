@@ -2,6 +2,8 @@ import {Land} from "./Land.ts";
 import FlatLand from "./FlatLand.ts";
 import {FScene} from '@fibbojs/3d'
 import {Queue} from "../classes/util/Queue.ts";
+import {randomInt} from "../classes/util/Random.ts";
+import SpaceBaseLand from "./SpaceBaseLand.ts";
 
 export class LandManager {
     scene: FScene;
@@ -35,9 +37,16 @@ export class LandManager {
     }
 
     generate() {
-        this.add(new FlatLand(this.scene, {
-            position: this.__SIZE__
-        }));
+        if(randomInt(0, 10) == 5) {
+            this.add(new SpaceBaseLand(this.scene, {
+                position: this.__SIZE__
+            }))
+        }
+        else {
+            this.add(new FlatLand(this.scene, {
+                position: this.__SIZE__
+            }));
+        }
     }
 
     frame(delta: number) {
