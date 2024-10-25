@@ -1,4 +1,4 @@
-import { FComponent, FScene } from '@fibbojs/3d'
+import { FComponent, FScene, FShapes } from '@fibbojs/3d'
 import * as THREE from 'three'
 
 export interface LaserBulletOptions {
@@ -50,8 +50,16 @@ export class LaserBullet extends FComponent {
 
     // Create the mesh
     this.__MESH__ = new THREE.Mesh(geometry, material)
-    // Rotate the bullet to face the end position
-    this.__MESH__.lookAt(new THREE.Vector3(options.endPosition.x, options.endPosition.y, options.endPosition.z))
+    // Compute rotation needed to align the bullet with the direction
+    const direction = new THREE.Vector3(
+      options.endPosition.x - options.startPosition.x,
+      options.endPosition.y - options.startPosition.y,
+      options.endPosition.z - options.startPosition.z
+    )
+    const axis = new THREE.Vector3(0, 1, 0)
+    this.__MESH__.quaternion.setFromUnitVectors(axis, direction.clone().normalize())
+    // Copy rotation to transform
+    this.transform.__ROTATION__ = new THREE.Euler().setFromQuaternion(this.__MESH__.quaternion)
 
     // Add a point light to make the bullet glow
     const light = new THREE.PointLight(options.color, 1, 3)
@@ -60,6 +68,12 @@ export class LaserBullet extends FComponent {
     // Define the bullet's lifespan
     this.lifespan = 100
     this.initialLifespan = this.lifespan
+
+    // Create sensor
+    this.initSensor({
+      shape: FShapes.CAPSULE,
+      scaleOffset: { x: -0.6, y: 0.8, z: -0.6 },
+    })
 
     this.emitOnLoaded()
     this.__UPDATE_POSITION__(true)

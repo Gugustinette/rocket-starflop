@@ -1,14 +1,15 @@
-import { FAmbientLight, FComponentEmpty, FCuboid, FDirectionalLight, FFixedCamera, FGameCamera, FRigidBodyType, FScene } from '@fibbojs/3d'
+import { FAmbientLight, FComponentEmpty, FCuboid, FDirectionalLight, FFixedCamera, FGameCamera, FRigidBodyType } from '@fibbojs/3d'
 import { FKeyboard } from '@fibbojs/event'
 import { fDebug } from '@fibbojs/devtools'
 import './style.css'
 import { loadGame } from './loadGame'
 import Craft from './classes/craft/Craft'
 import { CraftController } from './classes/craft/CraftControllerDebug'
+import { Scene } from './Scene'
 
 (async () => {
   // Initialize the scene
-  const scene = new FScene({
+  const scene = new Scene({
     shadows: true,
   })
   scene.init()
@@ -39,9 +40,6 @@ import { CraftController } from './classes/craft/CraftControllerDebug'
 
   // Load game
   loadGame(scene)
-
-  // Create craft
-  new Craft(scene)
 
   // Create a death zone
   const deathZone = new FComponentEmpty(scene, {
