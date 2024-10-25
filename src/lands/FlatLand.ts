@@ -79,12 +79,12 @@ export default class FlatLand extends Land {
     }
 
     addRocks() {
-        for (let i = 0; i < randomInt(10, 20); i++) {
+        for (let i = 0; i < randomInt(10, 25); i++) {
             let rock = createLargeRock(this.scene, {
                 position: {
-                    x: randomInt(50, 90) * (randomInt(0, 1) === 0 ? -1 : 1),
+                    x: randomInt(50, 90) * (randomInt(0, 1) === 0 ? -1 : 1) - 30,
                     y: 0,
-                    z: this.__DEPARTURE__ + this.__LENGTH__ + randomInt(-50, 50),
+                    z: this.__DEPARTURE__ + this.__LENGTH__ + randomInt(-100, 100),
                 }
             });
 
