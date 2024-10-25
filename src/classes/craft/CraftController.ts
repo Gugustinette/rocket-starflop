@@ -69,6 +69,9 @@ export class CraftController extends FController {
     // Create a cursor instance
     this.cursor = new CraftCursor()
     this.cursor.onClick((clickProgression) => {
+      let audio = new Audio('rocket-starflop/assets/shoot.wav')
+      audio.volume = 0.1
+      audio.play()
       new LaserBullet(scene, {
         startPosition: this.component.transform.position,
         endPosition: { x: clickProgression.x * 60 - 30, y: (1 - clickProgression.y) * 20 - 2, z: 0 },

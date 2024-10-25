@@ -2,46 +2,58 @@ import type {FScene} from '@fibbojs/3d'
 import Ground from "../classes/btp/Ground.ts";
 import {Land} from "./Land.ts";
 import Barrels from "../classes/btp/Barrels.ts";
-import HangarB from "../classes/btp/HangarB.ts";
+import {createHangar} from "../classes/btp/Hangar.ts";
 import {randomInt} from "../classes/util/Random.ts";
-
-class FlatLandOptions {
-    // public length: number = 200;
-    // public width: number = 200;
-    // public departure: number = -200;
-    public position: number = 1;
-}
+import {createCrater} from "../classes/btp/Crater.ts";
+import {createLargeRock} from "../classes/btp/Rock.ts";
 
 export default class FlatLand extends Land {
-    constructor(scene: FScene, options?: FlatLandOptions) {
-        super();
-        if(!options) {
-            options = new FlatLandOptions();
-        }
-        const LENGTH = 400;
-        const WIDTH = 600;
-        const DEPARTURE = options.position * -300;
+    constructor(scene: FScene, options: FlatLandOptions) {
+        super(scene, options);
 
-        let ground = new Ground(scene, {
+        let negativeXPositionBarrel = randomInt(0, 1)
+        this.addGround();
+        this.addBarrels(negativeXPositionBarrel);
+        this.addHangar(!negativeXPositionBarrel);
+        this.addCraters();
+        this.addRocks();
+
+    }
+
+    addGround() {
+        let ground = new Ground(this.scene, {
             position: {
-                x: -LENGTH,
+                x: -this.__LENGTH__,
                 y: 0,
-                z: DEPARTURE,
+                z: this.__DEPARTURE__,
             },
             scale: {
-                x: LENGTH,
+                x: this.__LENGTH__,
                 y: 1,
-                z: WIDTH,
+                z: this.__WIDTH__,
             }
         });
 
-        let negativeXPositionBarrel = randomInt(0, 1)
+        this.parcels.push(ground);
+    }
 
-        const barrels = new Barrels(scene, {
+    addHangar(negativeX: boolean) {
+        let hangar = createHangar(this.scene, {
             position: {
-                x: negativeXPositionBarrel ? randomInt(-50, -5) : randomInt(5, 50),
+                x: negativeX ? randomInt(-30, -5) : randomInt(5, 30),
                 y: 0,
-                z: DEPARTURE + LENGTH + randomInt(-20, 100),
+                z: this.__DEPARTURE__ + this.__LENGTH__ + randomInt(-20, 100),
+            }
+        });
+        this.parcels.push(hangar);
+    }
+
+    addBarrels(negativeX: boolean) {
+        const barrels = new Barrels(this.scene, {
+            position: {
+                x: negativeX ? randomInt(-30, -5) : randomInt(5, 30),
+                y: 0,
+                z: this.__DEPARTURE__ + this.__LENGTH__ + randomInt(-20, 100),
             },
             scale: {
                 x: 12,
@@ -49,22 +61,34 @@ export default class FlatLand extends Land {
                 z: 12,
             }
         })
-
-        const hangarLargeB = new HangarB(scene, {
-            position: {
-                x: !negativeXPositionBarrel ? randomInt(-50, -5) : randomInt(5, 50),
-                y: 0,
-                z: DEPARTURE + LENGTH + randomInt(-20, 100),
-            },
-            scale: {
-                x: 8,
-                y: 4,
-                z: 8,
-            }
-        })
-
-        this.parcels.push(ground);
         this.parcels.push(barrels);
-        this.parcels.push(hangarLargeB);
+    }
+
+    addCraters() {
+        for (let i = 0; i < randomInt(3, 10); i++) {
+            let crater = createCrater(this.scene, {
+                position: {
+                    x: randomInt(-70, 70),
+                    y: 0,
+                    z: this.__DEPARTURE__ + this.__LENGTH__ + randomInt(-50, 50),
+                }
+            })
+
+            this.parcels.push(crater);
+        }
+    }
+
+    addRocks() {
+        for (let i = 0; i < randomInt(10, 20); i++) {
+            let rock = createLargeRock(this.scene, {
+                position: {
+                    x: randomInt(50, 90) * (randomInt(0, 1) === 0 ? -1 : 1),
+                    y: 0,
+                    z: this.__DEPARTURE__ + this.__LENGTH__ + randomInt(-50, 50),
+                }
+            });
+
+            this.parcels.push(rock);
+        }
     }
 }
