@@ -45,7 +45,7 @@ export class RockCrystals extends BTP {
 export class RockCrystalsLargeA extends BTP {
     constructor(scene: FScene, options: BTPOptions) {
         super(scene, {
-            name: 'rock_crystals_largeA',
+            name: 'rock_crystalsLargeA',
             position: options.position,
             scale: options.scale,
         })
@@ -55,7 +55,7 @@ export class RockCrystalsLargeA extends BTP {
 export class RockCrystalsLargeB extends BTP {
     constructor(scene: FScene, options: BTPOptions) {
         super(scene, {
-            name: 'rock_crystals_largeB',
+            name: 'rock_crystalsLargeB',
             position: options.position,
             scale: options.scale,
         })
