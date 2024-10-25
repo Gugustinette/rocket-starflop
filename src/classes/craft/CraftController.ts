@@ -29,6 +29,11 @@ export class CraftController extends FController {
    */
   cursor: CraftCursor
 
+  /**
+   * Audio elements
+   */
+  shootSound: HTMLAudioElement
+
   constructor(scene: FScene, options: FControllerOptions) {
     super(options)
 
@@ -66,12 +71,16 @@ export class CraftController extends FController {
       this.inputs.left = false
     })
 
+    // Initialize the shoot sound
+    this.shootSound = new Audio('rocket-starflop/assets/shoot.wav')
+
     // Create a cursor instance
     this.cursor = new CraftCursor()
     this.cursor.onClick((clickProgression) => {
-      let audio = new Audio('rocket-starflop/assets/shoot.wav')
-      audio.volume = 0.1
-      audio.play()
+      // Play the shoot sound
+      const shootSound = this.shootSound.cloneNode() as HTMLAudioElement
+      shootSound.volume = 0.1
+      shootSound.play()
       new LaserBullet(scene, {
         startPosition: this.component.transform.position,
         endPosition: { x: clickProgression.x * 60 - 30, y: (1 - clickProgression.y) * 20 - 2, z: 0 },
