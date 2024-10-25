@@ -1,4 +1,4 @@
-import { FAmbientLight, FComponentEmpty, FCuboid, FDirectionalLight, FFixedCamera, FGameCamera, FRigidBodyType } from '@fibbojs/3d'
+import { FAmbientLight, FDirectionalLight, FFixedCamera, FGameCamera } from '@fibbojs/3d'
 import { FKeyboard } from '@fibbojs/event'
 import { fDebug } from '@fibbojs/devtools'
 import './style.css'
@@ -41,23 +41,6 @@ import { Scene } from './Scene'
   // Load game
   loadGame(scene)
 
-  // Create a death zone
-  const deathZone = new FComponentEmpty(scene, {
-    position: { x: 0, y: -20, z: 0 },
-    scale: { x: 100, y: 1, z: 100 },
-  })
-  deathZone.initCollider()
-
-  // Create a ground
-  const ground = new FCuboid(scene, {
-    position: { x: 0, y: -0.1, z: 0 },
-    scale: { x: 15, y: 0.1, z: 15 },
-  })
-  ground.initRigidBody({
-    rigidBodyType: FRigidBodyType.FIXED,
-  })
-  ground.setColor(0x348C31)
-
   // Create the craft
   const craft = new Craft(scene)
 
@@ -65,12 +48,6 @@ import { Scene } from './Scene'
   scene.camera = new FFixedCamera(scene, {
     position: { x: 0, y: 12, z: 20 },
     rotationDegree: { x: -10, y: 0, z: 0 },
-  })
-
-  // Add collision events
-  craft.onCollisionWith(deathZone, () => {
-    console.log('Craft fell into the death zone!')
-    craft.transform.position = { x: 0, y: 10, z: 0 }
   })
 
   // Create keyboard

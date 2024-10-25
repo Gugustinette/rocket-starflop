@@ -61,10 +61,6 @@ export class LaserBullet extends FComponent {
     // Copy rotation to transform
     this.transform.__ROTATION__ = new THREE.Euler().setFromQuaternion(this.__MESH__.quaternion)
 
-    // Add a point light to make the bullet glow
-    const light = new THREE.PointLight(options.color, 1, 3)
-    this.__MESH__.add(light)
-
     // Define the bullet's lifespan
     this.lifespan = 100
     this.initialLifespan = this.lifespan
@@ -97,9 +93,8 @@ export class LaserBullet extends FComponent {
     /**
      * VFX
      */
-    const material = this.__MESH__.material as THREE.MeshPhongMaterial
     // Fade out the bullet as it reaches the end of its lifespan
-    const opacityValue = this.lifespan / this.initialLifespan
-    material.opacity = opacityValue
+    // @ts-ignore
+    this.__MESH__.material.opacity = this.lifespan / this.initialLifespan
   }
 }
