@@ -26,21 +26,18 @@ export class Scene extends FScene {
     // Add directional light to represent the sun
     new FDirectionalLight(this, {
       position: { x: 20, y: 20, z: 0 },
-      color: 0xFFFFFF,
+      color: 0xF9F6FF,
       intensity: 3,
-      shadowQuality: 12,
-    })
-
-    new FDirectionalLight(this, {
-      position: { x: 0, y: 20, z: 50 },
-      color: 0xFFFFFF,
-      intensity: 2,
       shadowQuality: 12,
     })
     // Add ambient light
     new FAmbientLight(this, {
+      color: 0x403B50,
+      intensity: 40,
+    })
+    new FAmbientLight(this, {
       color: 0x404040,
-      intensity: 20,
+      intensity: 10,
     })
 
     // Sky box from : https://www.freepik.com/free-photo/outer-space-background_4100956.htm#fromView=search&page=1&position=4&uuid=b34e88e9-22bd-489a-aa87-7bf0088ff78f
