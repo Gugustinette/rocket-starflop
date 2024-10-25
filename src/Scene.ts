@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OutlineEffect } from 'three/addons/effects/OutlineEffect.js';
 import {FAmbientLight, FDirectionalLight, FScene, FSceneOptions} from '@fibbojs/3d';
+import { WindEffect } from './fx/WindEffect';
 
 export class Scene extends FScene {
   declare effect: OutlineEffect;
@@ -49,5 +50,8 @@ export class Scene extends FScene {
         texture.colorSpace = THREE.SRGBColorSpace;
         this.scene.background = texture;
       });
+    
+    // Wind effect
+    new WindEffect(this);
   }
 }
