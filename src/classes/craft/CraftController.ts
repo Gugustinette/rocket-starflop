@@ -2,6 +2,7 @@ import { FKeyboard } from '@fibbojs/event'
 import type { FControllerOptions, FScene } from '@fibbojs/3d'
 import { FController } from '@fibbojs/3d'
 import CraftCursor from './CraftCursor'
+import { LaserBullet } from '../bullet/Bullet'
 
 const CRAFT_ANGLE = 120
 
@@ -40,9 +41,6 @@ export class CraftController extends FController {
       right: false,
     }
 
-    // Create a cursor instance
-    this.cursor = new CraftCursor()
-
     // Create a keyboard instance
     const fKeyboard = new FKeyboard(scene)
 
@@ -66,6 +64,15 @@ export class CraftController extends FController {
     })
     fKeyboard.onKeyUp('q', () => {
       this.inputs.left = false
+    })
+
+    // Create a cursor instance
+    this.cursor = new CraftCursor()
+    this.cursor.onClick((clickProgression) => {
+      new LaserBullet(scene, {
+        startPosition: { x: 0, y: 10, z: 17 },
+        endPosition: { x: clickProgression.x * 60 - 30, y: (1 - clickProgression.y) * 20 - 2, z: 0 },
+      })
     })
   }
 

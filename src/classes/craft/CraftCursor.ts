@@ -6,6 +6,8 @@ export default class CraftCursor {
   __MOUSE_POSITION__ = { x: 0, y: 0 }
   __SCREEN_SIZE__ = { width: 0, height: 0 }
 
+  __CALLBACKS_ON_CLICK__: ((clickProgression: { x: number, y: number }) => void)[] = []
+
   constructor() {
     this.__SCREEN_SIZE__.width = window.innerWidth
     this.__SCREEN_SIZE__.height = window.innerHeight
@@ -17,6 +19,18 @@ export default class CraftCursor {
       this.__SCREEN_SIZE__.width = window.innerWidth
       this.__SCREEN_SIZE__.height = window.innerHeight
     })
+    window.addEventListener('click', (event) => {
+      const clickPosition = { x: event.clientX, y: event.clientY }
+      const clickProgression = {
+        x: clickPosition.x / this.__SCREEN_SIZE__.width,
+        y: clickPosition.y / this.__SCREEN_SIZE__.height
+      }
+      this.__CALLBACKS_ON_CLICK__.forEach((callback) => callback(clickProgression))
+    })
+  }
+
+  onClick(callback: (clickProgression: { x: number, y: number }) => void) {
+    this.__CALLBACKS_ON_CLICK__.push(callback)
   }
 
   /**
