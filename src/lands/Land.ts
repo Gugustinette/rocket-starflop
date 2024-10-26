@@ -1,4 +1,5 @@
-import type {FModel, FScene} from '@fibbojs/3d'
+import type {FScene} from '@fibbojs/3d'
+import {BTP} from "../classes/btp/BTP.ts";
 
 export interface LandOptions {
     position: number;
@@ -11,7 +12,7 @@ export abstract class Land {
     __DEPARTURE__ = 0;
 
     scene: FScene;
-    parcels: FModel[] = []
+    parcels: BTP[] = []
 
     protected constructor(scene: FScene, options: LandOptions) {
         this.scene = scene;
@@ -20,13 +21,19 @@ export abstract class Land {
 
     move() {
         this.parcels.forEach(parcel => {
-            parcel.transform.z += 1;
+            if(!parcel.deleted) {
+                parcel.transform.z += 1;
+            }
         });
+
+
     }
 
     delete() {
         this.parcels.forEach(parcel => {
-            parcel.scene.removeComponent(parcel);
+            if(this.scene.components.includes(parcel)) {
+                parcel.scene.removeComponent(parcel);
+            }
         });
     }
 

@@ -9,6 +9,10 @@ export class Queue<T> {
         return this.items.shift();
     }
 
+    removeAt(index: number): T | undefined {
+        return this.items.splice(index, 1)[0];
+    }
+
     peek(): T | undefined {
         return this.items[0];
     }
