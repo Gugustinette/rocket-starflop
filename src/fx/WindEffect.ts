@@ -1,5 +1,6 @@
 import { FScene } from '@fibbojs/3d'
 import * as THREE from 'three'
+import { GameState } from '../GameState'
 
 export class WindEffect {
   private scene: FScene
@@ -11,10 +12,13 @@ export class WindEffect {
   private particleData: Float32Array
   private cameraZ: number
 
-  constructor(scene: FScene, particleCount = 1000, speed = 100) {
+  constructor(scene: FScene, particleCount = 1000) {
     this.scene = scene
     this.particleCount = particleCount
-    this.speed = speed
+    this.speed = GameState.speed
+    GameState.onSpeedChange((speed) => {
+      this.speed = speed
+    })
     this.cameraZ = 20
 
     this.particleData = new Float32Array(this.particleCount * 4) // x, y, z, life

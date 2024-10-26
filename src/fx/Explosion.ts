@@ -1,5 +1,6 @@
 import { FScene, FVector3 } from '@fibbojs/3d';
 import * as THREE from 'three';
+import { GameState } from '../GameState';
 
 export interface ExplosionOptions {
   position: FVector3;
@@ -108,8 +109,8 @@ export class Explosion {
     this.updateParticles(delta, this.particles, this.particleGeometry, this.particleMaterial, this.particleLifespan);
     this.updateParticles(delta, this.smokeParticles, this.smokeParticleGeometry, this.smokeParticleMaterial, this.smokeLifespan);
     // Move everything on the z-axis to simulate an explosion in 3D
-    this.particles.position.z += this.particleSpeed * delta * 10;
-    this.smokeParticles.position.z += this.particleSpeed * delta * 10;
+    this.particles.position.z += this.particleSpeed * delta * GameState.speed / 10;
+    this.smokeParticles.position.z += this.particleSpeed * delta * GameState.speed / 10;
   }
 
   private updateParticles(delta: number, particles: THREE.Points, geometry: THREE.BufferGeometry, material: THREE.PointsMaterial, lifespan: number) {
