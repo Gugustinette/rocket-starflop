@@ -29,13 +29,13 @@ export class Explosion {
     this.radius = options.radius;
 
     if (import.meta.env.DEV)
-      this.explosionSound = new Audio('rocket-starflop/assets/explosion.mp3')
+      this.explosionSound = new Audio('rocket-starflop/assets/explosion.wav')
     else
-      this.explosionSound = new Audio('assets/explosion.mp3')
+      this.explosionSound = new Audio('assets/explosion.wav')
 
     // Play the shoot sound
     const explosionSound = this.explosionSound.cloneNode() as HTMLAudioElement
-    explosionSound.volume = 1
+    explosionSound.volume = 0.1
     explosionSound.play()
 
     this.initParticles();
