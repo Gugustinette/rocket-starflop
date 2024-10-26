@@ -34,6 +34,7 @@ import { Scene } from './Scene'
     craft.controller = new CraftController(scene, { 
       component: craft 
     })
+    scene.debug = true
     scene.camera = new FGameCamera(scene, {
       target: craft,
     })

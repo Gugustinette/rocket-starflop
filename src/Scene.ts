@@ -10,6 +10,9 @@ import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
 import { RenderPixelatedPass } from 'three/addons/postprocessing/RenderPixelatedPass.js';
 
 export class Scene extends FScene {
+  declare composer: EffectComposer;
+  debug: boolean = false;
+
   constructor(options: FSceneOptions) {
     super(options);
   }
@@ -65,20 +68,21 @@ export class Scene extends FScene {
      * Post Processing
      */
     // Create the composer
-    const composer = new EffectComposer( this.renderer );
+    this.composer = new EffectComposer( this.renderer );
 
     // Add output pass
-    composer.addPass(new OutputPass());
+    this.composer.addPass(new OutputPass());
     // Add pixelated pass
-    composer.addPass(new RenderPixelatedPass( 2, this.scene, this.camera.__CAMERA__ ));
+    this.composer.addPass(new RenderPixelatedPass( 2, this.scene, this.camera.__CAMERA__ ));
     // Add FXAA pass
     const effectFXAA = new ShaderPass( FXAAShader );
     effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
-    composer.addPass( effectFXAA );
+    this.composer.addPass( effectFXAA );
 
     // Render the composer on each frame
     this.onFrame(() => {
-      composer.render();
+      if (this.debug) return;
+      this.composer.render();
     })
   }
 }
