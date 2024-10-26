@@ -1,11 +1,11 @@
 import { FGameCamera } from '@fibbojs/3d'
-import { FKeyboard } from '@fibbojs/event'
 import { fDebug } from '@fibbojs/devtools'
 import './style.css'
 import { loadGame } from './loadGame'
 import Craft from './classes/craft/Craft'
 import { CraftController } from './classes/craft/CraftControllerDebug'
 import { Scene } from './Scene'
+import { ScorePanel } from './ui/ScorePanel'
 
 (async () => {
   // Initialize the scene
@@ -24,11 +24,8 @@ import { Scene } from './Scene'
   // Create the craft
   const craft = new Craft(scene)
 
-  // Create keyboard
-  const keyboard = new FKeyboard(scene)
-  keyboard.onKeyDown('p', () => {
-    craft.transform.position = { x: 0, y: 5, z: 0 }
-  })
+  // Initialize UI
+  new ScorePanel()
 
   if (false) {
     craft.controller = new CraftController(scene, { 
