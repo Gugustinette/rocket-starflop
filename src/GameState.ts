@@ -24,6 +24,7 @@ export class GameState {
   static set score(score: number) {
     this.__SCORE__ = score
     this.__CALLBACKS_ON_SCORE_CHANGE__.forEach((callback) => callback(score))
+    this.speed = this.score / 4 + 100
   }
 
   static get speed() {

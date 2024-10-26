@@ -4,6 +4,7 @@ import { CraftController } from './CraftController'
 import { FGLBToon } from '../util/FGLBToon'
 import { LaserGun } from '../weapon/LaserGun'
 import { OscilloGun } from '../weapon/OscilloGun'
+import { GameState } from '../../GameState'
 
 export default class Craft extends FGLBToon {
   // Level
@@ -25,6 +26,20 @@ export default class Craft extends FGLBToon {
     // Initialize guns
     this.laserGun = new LaserGun(this)
     this.oscilloGun = new OscilloGun(this)
+
+    GameState.onScoreChange((score) => {
+      if (score > 100 && this.level === 1) {
+        this.levelUp()
+      } else if (score > 300 && this.level === 2) {
+        this.levelUp()
+      } else if (score > 500 && this.level === 3) {
+        this.levelUp()
+      } else if (score > 1000 && this.level === 4) {
+        this.levelUp()
+      } else if (score > 2000 && this.level === 5) {
+        this.levelUp()
+      }
+    })
 
     this.controller = new CraftController(scene, {
       component: this,
