@@ -8,6 +8,7 @@ export class HangarA extends BTP {
             name: 'hangar_largeA',
             position: options.position,
             scale: options.scale,
+            lifePoints: 3
         })
 
         this.createSensor()
@@ -20,6 +21,7 @@ export class HangarB extends BTP {
             name: 'hangar_largeB',
             position: options.position,
             scale: options.scale,
+            lifePoints: 3
         })
 
         this.createSensor()

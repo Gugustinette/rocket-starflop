@@ -1,5 +1,6 @@
 import type {FScene} from '@fibbojs/3d'
 import {BTP} from "../classes/btp/BTP.ts";
+import {GameState} from "../GameState.ts";
 
 export interface LandOptions {
     position: number;
@@ -20,9 +21,11 @@ export abstract class Land {
     }
 
     move() {
+        this.parcels = this.parcels.filter(parcel => !parcel.deleted);
+
         this.parcels.forEach(parcel => {
             if(!parcel.deleted) {
-                parcel.transform.z += 1;
+                parcel.transform.z += GameState.speed / 100;
             }
         });
 

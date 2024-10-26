@@ -8,7 +8,10 @@ export class Rock extends BTP {
             name: 'rock',
             position: options.position,
             scale: options.scale,
+            lifePoints: 10
         })
+
+        this.createSensor();
     }
 }
 
@@ -18,7 +21,10 @@ export class RockLargeA extends BTP {
             name: 'rock_largeA',
             position: options.position,
             scale: options.scale,
+            lifePoints: 10
         })
+
+        this.createSensor();
     }
 }
 
@@ -28,7 +34,10 @@ export class RockLargeB extends BTP {
             name: 'rock_largeB',
             position: options.position,
             scale: options.scale,
+            lifePoints: 10
         })
+
+        this.createSensor();
     }
 }
 
@@ -38,7 +47,10 @@ export class RockCrystals extends BTP {
             name: 'rock_crystals',
             position: options.position,
             scale: options.scale,
+            lifePoints: 10
         })
+
+        this.createSensor();
     }
 }
 
@@ -48,7 +60,10 @@ export class RockCrystalsLargeA extends BTP {
             name: 'rock_crystalsLargeA',
             position: options.position,
             scale: options.scale,
+            lifePoints: 10
         })
+
+        this.createSensor();
     }
 }
 
@@ -58,7 +73,10 @@ export class RockCrystalsLargeB extends BTP {
             name: 'rock_crystalsLargeB',
             position: options.position,
             scale: options.scale,
+            lifePoints: 10
         })
+
+        this.createSensor();
     }
 }
 
