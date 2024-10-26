@@ -6,7 +6,7 @@ export class OscilloGun {
   craft: Craft
 
   constructor(craft: Craft) {
-    this.level = 1
+    this.level = 0
     this.craft = craft
   }
 
@@ -35,7 +35,7 @@ export class OscilloGun {
         startPosition: { x: this.craft.transform.position.x + 0.5, y: this.craft.transform.position.y, z: this.craft.transform.position.z },
         endPosition: { x: clickProgression.x * 60 - 30 + 0.5, y: (1 - clickProgression.y) * 20 - 2, z: 0 },
       })
-    } else {
+    } else if (this.level === 1) {
       new OscilloBullet(this.craft.scene, {
         startPosition: this.craft.transform.position,
         endPosition: { x: clickProgression.x * 60 - 30, y: (1 - clickProgression.y) * 20 - 2, z: 0 },
