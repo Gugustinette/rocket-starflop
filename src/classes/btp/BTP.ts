@@ -1,7 +1,7 @@
 import {FScene} from '@fibbojs/3d'
 import {FGLBToon} from "../util/FGLBToon.ts";
-import {LaserBullet} from "../bullet/Bullet.ts";
 import {Explosion} from "../../fx/Explosion.ts";
+import {Bullet} from "../weapon/Bullet.ts";
 
 export interface BTPOptions {
     position: { x: number, y: number, z: number };
@@ -33,7 +33,7 @@ export abstract class BTP extends FGLBToon {
             }
         });
 
-        this.onCollisionWith(LaserBullet, ({component}) => {
+        this.onCollisionWith(Bullet, ({component}) => {
             new Explosion(this.scene, {
                 position: {
                     x: this.transform.x + this.transform.scaleX / 2,
