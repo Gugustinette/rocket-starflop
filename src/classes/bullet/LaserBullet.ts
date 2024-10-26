@@ -4,7 +4,7 @@ import * as THREE from 'three'
 export interface LaserBulletOptions {
   startPosition?: { x: number, y: number, z: number },
   endPosition?: { x: number, y: number, z: number },
-  color?: THREE.Color
+  color?: number
 }
 
 const BULLET_SPEED = 10
@@ -25,7 +25,7 @@ export class LaserBullet extends FComponent {
     const DEFAULT_OPTIONS = {
       startPosition: { x: 0, y: 5, z: 0 },
       endPosition: { x: 0, y: 10, z: 10 },
-      color: new THREE.Color(0xFFFFFF)
+      color: 0xFFFFFF,
     }
     options = { ...DEFAULT_OPTIONS, ...options }
     // Validate options

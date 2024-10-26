@@ -2,7 +2,7 @@ import { FKeyboard } from '@fibbojs/event'
 import type { FControllerOptions, FScene } from '@fibbojs/3d'
 import { FController } from '@fibbojs/3d'
 import CraftCursor from './CraftCursor'
-import { LaserBullet } from '../bullet/Bullet'
+import { LaserGun } from '../bullet/LaserGun'
 
 const CRAFT_ANGLE = 120
 
@@ -28,6 +28,11 @@ export class CraftController extends FController {
    * The cursor instance.
    */
   cursor: CraftCursor
+
+  /**
+   * Laser gun
+   */
+  laserGun: LaserGun
 
   /**
    * Audio elements
@@ -71,6 +76,9 @@ export class CraftController extends FController {
       this.inputs.left = false
     })
 
+    // Initialize laser gun
+    this.laserGun = new LaserGun(this.component as any)
+
     // Initialize the shoot sound
     if (import.meta.env.DEV)
       this.shootSound = new Audio('rocket-starflop/assets/shoot.wav')
@@ -84,10 +92,8 @@ export class CraftController extends FController {
       const shootSound = this.shootSound.cloneNode() as HTMLAudioElement
       shootSound.volume = 0.1
       shootSound.play()
-      new LaserBullet(scene, {
-        startPosition: this.component.transform.position,
-        endPosition: { x: clickProgression.x * 60 - 30, y: (1 - clickProgression.y) * 20 - 2, z: 0 },
-      })
+      // Shoot
+      this.laserGun.shoot(clickProgression)
     })
   }
 
