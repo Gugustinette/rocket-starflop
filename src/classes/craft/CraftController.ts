@@ -2,8 +2,8 @@ import { FKeyboard } from '@fibbojs/event'
 import type { FControllerOptions, FScene } from '@fibbojs/3d'
 import { FController } from '@fibbojs/3d'
 import CraftCursor from './CraftCursor'
-import { LaserGun } from '../bullet/LaserGun'
-import { OscilloGun } from '../bullet/OscilloGun'
+import { LaserGun } from '../weapon/LaserGun'
+import { OscilloGun } from '../weapon/OscilloGun'
 
 const CRAFT_ANGLE = 120
 
