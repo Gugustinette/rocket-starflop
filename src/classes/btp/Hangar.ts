@@ -9,6 +9,15 @@ export class HangarA extends BTP {
             position: options.position,
             scale: options.scale,
         })
+        /*
+        this.initSensor();
+        this.onCollisionWith(LaserBullet, () => {
+            new Explosion(scene, {
+                position: this.transform.position,
+                radius: 10
+            })
+        })
+        */
     }
 }
 
