@@ -21,14 +21,26 @@ export class Explosion {
   private particleSpeed: number = 5;
   private particleLifespan: number = 2; // seconds
   private smokeLifespan: number = 3; // seconds
+  private explosionSound: HTMLAudioElement
 
   constructor(scene: FScene, options: ExplosionOptions) {
     this.scene = scene.scene;
     this.position = new THREE.Vector3(options.position.x, options.position.y, options.position.z);
     this.radius = options.radius;
 
+    if (import.meta.env.DEV)
+      this.explosionSound = new Audio('rocket-starflop/assets/explosion.mp3')
+    else
+      this.explosionSound = new Audio('assets/explosion.mp3')
+
+    // Play the shoot sound
+    const explosionSound = this.explosionSound.cloneNode() as HTMLAudioElement
+    explosionSound.volume = 1
+    explosionSound.play()
+
     this.initParticles();
     this.initSmokeParticles();
+
 
     scene.onFrame((delta) => this.frame(delta));
   }
