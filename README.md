@@ -1,29 +1,15 @@
 # Rocket Starflop
 
-Le jeu de fou là
+![Rocket Starflop](./public/logo.png)
 
-## Author
+Rocket Starflop est un jeu d'arcade shoot'em up en 3D développé avec le moteur [Fibbo](https://fibbo.dev).
 
-Augustin Mercier et Maël Caubere
+Pour jouer, rendez-vous sur [https://gugustinette.github.io/rocket-starflop/](https://gugustinette.github.io/rocket-starflop/).
 
+## Auteurs
 
-## Développment
-
-- Installation des dépendances
-
-```bash
-npm install
-```
-
-- Lancement du serveur de développement
-
-```bash
-npm run dev
-```
-
-## GDD
-
-![gdd](./gdd.png)
+- [Augustin Mercier](https://github.com/gugustinette)
+- [Maël Caubere](https://github.com/oulahoop)
 
 ## Crédits
 
