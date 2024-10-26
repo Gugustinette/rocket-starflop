@@ -100,8 +100,12 @@ export class CraftController extends FController {
       // The farther the craft is from the endpoint on the right, the faster it moves towards it
       this.component.transform.x += 0.2 * Math.min(1, 2 - this.component.transform.x)
     }
-    // Rotate the craft
+    // Rotate the craft according to the cursor position
     this.component.transform.rotationDegreeY = (1 - this.cursor.mouseProgression.x) * CRAFT_ANGLE - CRAFT_ANGLE / 2
     this.component.transform.rotationDegreeX = (1 - this.cursor.mouseProgression.y) * CRAFT_ANGLE - CRAFT_ANGLE / 2
+
+    // Smooth rotation on Z axis
+    let targetRotationZ = this.inputs.left ? 20 : this.inputs.right ? -20 : 0;
+    this.component.transform.rotationDegreeZ += (targetRotationZ - this.component.transform.rotationDegreeZ) * 0.1;
   }
 }
