@@ -11,7 +11,7 @@ export class WindEffect {
   private particleData: Float32Array
   private cameraZ: number
 
-  constructor(scene: FScene, particleCount = 1000, speed = 200) {
+  constructor(scene: FScene, particleCount = 1000, speed = 100) {
     this.scene = scene
     this.particleCount = particleCount
     this.speed = speed

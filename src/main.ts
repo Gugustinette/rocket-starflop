@@ -1,4 +1,4 @@
-import { FFixedCamera, FGameCamera } from '@fibbojs/3d'
+import { FGameCamera } from '@fibbojs/3d'
 import { FKeyboard } from '@fibbojs/event'
 import { fDebug } from '@fibbojs/devtools'
 import './style.css'
@@ -23,12 +23,6 @@ import { Scene } from './Scene'
 
   // Create the craft
   const craft = new Craft(scene)
-
-  // Create the camera
-  scene.camera = new FFixedCamera(scene, {
-    position: { x: 0, y: 12, z: 20 },
-    rotationDegree: { x: -10, y: 0, z: 0 },
-  })
 
   // Create keyboard
   const keyboard = new FKeyboard(scene)

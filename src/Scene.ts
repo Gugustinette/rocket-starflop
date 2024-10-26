@@ -1,11 +1,15 @@
 import * as THREE from 'three';
-import { OutlineEffect } from 'three/addons/effects/OutlineEffect.js';
-import {FAmbientLight, FDirectionalLight, FScene, FSceneOptions} from '@fibbojs/3d';
+import { FAmbientLight, FDirectionalLight, FFixedCamera, FScene, FSceneOptions } from '@fibbojs/3d';
 import { WindEffect } from './fx/WindEffect';
 
-export class Scene extends FScene {
-  declare effect: OutlineEffect;
+// Post processing
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
+import { RenderPixelatedPass } from 'three/addons/postprocessing/RenderPixelatedPass.js';
 
+export class Scene extends FScene {
   constructor(options: FSceneOptions) {
     super(options);
   }
@@ -13,16 +17,16 @@ export class Scene extends FScene {
   init(): void {
     super.init();
 
+    // Create the camera
+    this.camera = new FFixedCamera(this, {
+      position: { x: 0, y: 12, z: 20 },
+      rotationDegree: { x: -10, y: 0, z: 0 },
+    });
+
     // Set the background color of the scene
     this.scene.background = new THREE.Color(0x251733);
     // Set the fog to the same color as the background
     this.scene.fog = new THREE.Fog(0x251733, 0, 700);
-
-    // Create outline effect
-    this.effect = new OutlineEffect(this.renderer);
-    this.onFrame(() => {
-      this.effect.render(this.scene, this.camera.__CAMERA__);
-    })
 
     // Add directional lights to represent the sun
     const sun = new FDirectionalLight(this, {
@@ -56,5 +60,25 @@ export class Scene extends FScene {
     
     // Wind effect
     new WindEffect(this);
+
+    /**
+     * Post Processing
+     */
+    // Create the composer
+    const composer = new EffectComposer( this.renderer );
+
+    // Add output pass
+    composer.addPass(new OutputPass());
+    // Add pixelated pass
+    composer.addPass(new RenderPixelatedPass( 2, this.scene, this.camera.__CAMERA__ ));
+    // Add FXAA pass
+    const effectFXAA = new ShaderPass( FXAAShader );
+    effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
+    composer.addPass( effectFXAA );
+
+    // Render the composer on each frame
+    this.onFrame(() => {
+      composer.render();
+    })
   }
 }
