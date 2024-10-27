@@ -4,6 +4,7 @@ import {GameState} from "../GameState.ts";
 
 export interface LandOptions {
     position: number;
+    offset?: number;
 }
 
 export abstract class Land {
@@ -17,15 +18,15 @@ export abstract class Land {
 
     protected constructor(scene: FScene, options: LandOptions) {
         this.scene = scene;
-        this.__DEPARTURE__ = options.position * this.__DEPARTURE_MULTIPLIER__;
+        this.__DEPARTURE__ = options.position * this.__DEPARTURE_MULTIPLIER__ + (options.offset || 0);
     }
 
-    move() {
+    move(delta: number) {
         this.parcels = this.parcels.filter(parcel => !parcel.deleted);
 
         this.parcels.forEach(parcel => {
             if(!parcel.deleted) {
-                parcel.transform.z += GameState.speed / 100;
+                parcel.transform.z += (GameState.speed / 100) * delta * 50;
             }
         });
 

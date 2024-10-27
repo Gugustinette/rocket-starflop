@@ -5,6 +5,7 @@ import { FGLBToon } from '../util/FGLBToon'
 import { LaserGun } from '../weapon/LaserGun'
 import { OscilloGun } from '../weapon/OscilloGun'
 import { GameState } from '../../GameState'
+import {LevelUpPanel} from "../../ui/LevelUpPanel.ts";
 
 export default class Craft extends FGLBToon {
   // Level
@@ -48,6 +49,7 @@ export default class Craft extends FGLBToon {
 
   levelUp(): void {
     this.level++
+    new LevelUpPanel(this.level)
     if (this.level === 2) {
       this.laserGun.level = 2
     } else if (this.level === 3) {

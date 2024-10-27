@@ -36,29 +36,25 @@ export class LandManager {
         this.lands.add(land);
     }
 
-    generate() {
+    generate(z: number) {
         if(randomInt(0, 10) == 5) {
             this.add(new SpaceBaseLand(this.scene, {
-                position: this.__SIZE__
+                position: this.__SIZE__,
+                offset: z
             }))
         }
         else {
             this.add(new FlatLand(this.scene, {
-                position: this.__SIZE__
+                position: this.__SIZE__,
+                offset: z
             }));
         }
     }
 
     frame(delta: number) {
         if(delta >= 0) {
-            this.counter += delta * 10000 * 10;
-
-            if(this.counter < 1500) {
-                return;
-            }
-
             this.lands.forEach(land => {
-                land.move();
+                land.move(delta);
             });
 
             let lastLand = this.lands.peek();
@@ -66,7 +62,7 @@ export class LandManager {
                 let land = this.lands.remove();
                 if (land) {
                     land.delete();
-                    this.generate();
+                    this.generate(lastLand.getZ());
                 }
             }
 
