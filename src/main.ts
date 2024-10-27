@@ -28,10 +28,10 @@ import Meteor from './classes/meteor/Meteor'
   // Initialize UI
   new ScorePanel()
 
-  // Every 1 second, create a new meteor
+  // Every 4 seconds, create a new meteor
   setInterval(() => {
     new Meteor(scene)
-  }, 1000)
+  }, 4000)
 
   if (false) {
     craft.controller = new CraftController(scene, { 
