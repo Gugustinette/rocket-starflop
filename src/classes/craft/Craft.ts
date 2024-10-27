@@ -42,7 +42,7 @@ export default class Craft extends FGLBToon {
       }
     })
 
-    this.controller = new CraftController(scene, {
+    this.controller = new CraftController({
       component: this,
     })
   }

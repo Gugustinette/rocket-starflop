@@ -26,14 +26,14 @@ export abstract class BTP extends FGLBToon {
         this.lifePoints = options.lifePoints ?? 1;
     }
 
-    createSensor() {
+    createSensor(options?: { positionOffset?: { x: number, y: number, z: number }, scaleOffset?: { x: number, y: number, z: number } }) {
         this.initSensor({
-            positionOffset: {
+            positionOffset: options?.positionOffset ?? {
                 x: this.transform.scaleX,
                 y: 3,
                 z: this.transform.scaleZ - 4
             },
-            scaleOffset: {
+            scaleOffset: options?.scaleOffset ?? {
                 x: 0,
                 y: -this.transform.scaleY / 2 + 3,
                 z: this.transform.scaleZ - this.transform.scaleZ / 2

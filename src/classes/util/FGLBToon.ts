@@ -42,12 +42,12 @@ export class FGLBToon extends FModel {
   
           // Define mesh transforms
           this.defineMeshTransforms()
-  
-          // Call the onLoaded Callbacks
-          this.emitOnLoaded()
 
           // Cache the mesh
           FGLBToon.__CACHED_MESHES__[this.path] = this.__MESH__.clone() as unknown as THREE.Mesh
+  
+          // Call the onLoaded Callbacks
+          this.emitOnLoaded()
         },
         // Called while loading is progressing
         (_xhr) => {

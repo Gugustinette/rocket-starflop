@@ -6,6 +6,7 @@ import Craft from './classes/craft/Craft'
 import { CraftController } from './classes/craft/CraftControllerDebug'
 import { Scene } from './Scene'
 import { ScorePanel } from './ui/ScorePanel'
+import Meteor from './classes/meteor/Meteor'
 
 (async () => {
   // Initialize the scene
@@ -26,6 +27,11 @@ import { ScorePanel } from './ui/ScorePanel'
 
   // Initialize UI
   new ScorePanel()
+
+  // Every 1 second, create a new meteor
+  setInterval(() => {
+    new Meteor(scene)
+  }, 1000)
 
   if (false) {
     craft.controller = new CraftController(scene, { 

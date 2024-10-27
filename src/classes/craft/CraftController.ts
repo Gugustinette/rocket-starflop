@@ -1,15 +1,24 @@
 import { FKeyboard } from '@fibbojs/event'
-import type { FControllerOptions, FScene } from '@fibbojs/3d'
+import type { FControllerOptions } from '@fibbojs/3d'
 import { FController } from '@fibbojs/3d'
 import CraftCursor from './CraftCursor'
+import Craft from './Craft'
 
 const CRAFT_ANGLE = 120
 
+export interface CraftControllerOptions extends FControllerOptions {
+  component: Craft
+}
+
 /**
  * Craft controller that will be used to move the craft.
- * @category Controller
  */
 export class CraftController extends FController {
+  /**
+   * The craft component.
+   */
+  declare component: Craft
+
   /**
    * The inputs that will be used to move the craft.
    */
@@ -17,11 +26,6 @@ export class CraftController extends FController {
     left: boolean
     right: boolean
   }
-
-  /**
-   * The scene where the craft is.
-   */
-  scene: FScene
 
   /**
    * The cursor instance.
@@ -33,11 +37,8 @@ export class CraftController extends FController {
    */
   shootSound: HTMLAudioElement
 
-  constructor(scene: FScene, options: FControllerOptions) {
+  constructor(options: FControllerOptions) {
     super(options)
-
-    // Store options
-    this.scene = scene
 
     // Map of the movements (will be updated by the keyboard)
     this.inputs = {
@@ -46,7 +47,7 @@ export class CraftController extends FController {
     }
 
     // Create a keyboard instance
-    const fKeyboard = new FKeyboard(scene)
+    const fKeyboard = new FKeyboard(options.component.scene)
 
     // Key down
     fKeyboard.onKeyDown('a', () => {
@@ -84,7 +85,6 @@ export class CraftController extends FController {
       shootSound.volume = 0.1
       shootSound.play()
       // Shoot
-      // @ts-ignore
       this.component.shoot(clickProgression)
     })
   }
