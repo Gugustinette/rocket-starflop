@@ -6,6 +6,7 @@ import { LaserGun } from '../weapon/LaserGun'
 import { OscilloGun } from '../weapon/OscilloGun'
 import { GameState } from '../../GameState'
 import {LevelUpPanel} from "../../ui/LevelUpPanel.ts";
+import Meteor from '../meteor/Meteor.ts'
 
 export default class Craft extends FGLBToon {
   // Level
@@ -44,6 +45,16 @@ export default class Craft extends FGLBToon {
 
     this.controller = new CraftController({
       component: this,
+    })
+
+    this.onCollisionWith(Meteor, ({ component }) => {
+      const meteor = component as Meteor
+      meteor.explode()
+      GameState.health--
+    })
+    this.initSensor({
+      positionOffset: { x: 0, y: 0.5, z: 0 },
+      scaleOffset: { x: -0.5, y: -1, z: -0.5 },
     })
   }
 

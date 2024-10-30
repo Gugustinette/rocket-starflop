@@ -16,3 +16,4 @@ Pour jouer, rendez-vous sur [https://gugustinette.github.io/rocket-starflop/](ht
 Les assets proviennent tous des packs suivants :
 - https://kenney.nl/assets/space-kit
 - https://kenney.nl/assets/space-station-kit
+- https://fliflifly.itch.io/hearts-and-health-bar
