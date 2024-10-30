@@ -4,6 +4,8 @@ import { MeteorController } from './MeteorController'
 import { BTP } from '../btp/BTP'
 
 export default class Meteor extends BTP {
+  score: number = 100
+
   constructor(scene: FScene) {
     // Randomize the start and end position
     const startPosition = {
