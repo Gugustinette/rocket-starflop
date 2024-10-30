@@ -1,4 +1,4 @@
-import {FScene} from '@fibbojs/3d'
+import {FRigidBodyOptions, FScene} from '@fibbojs/3d'
 import {FGLBToon} from "../util/FGLBToon.ts";
 import {Explosion} from "../../fx/Explosion.ts";
 import {Bullet} from "../weapon/Bullet.ts";
@@ -27,18 +27,7 @@ export abstract class BTP extends FGLBToon {
     }
 
     createSensor(options?: { positionOffset?: { x: number, y: number, z: number }, scaleOffset?: { x: number, y: number, z: number } }) {
-        this.initSensor({
-            positionOffset: options?.positionOffset ?? {
-                x: this.transform.scaleX,
-                y: 3,
-                z: this.transform.scaleZ - 4
-            },
-            scaleOffset: options?.scaleOffset ?? {
-                x: 0,
-                y: -this.transform.scaleY / 2 + 3,
-                z: this.transform.scaleZ - this.transform.scaleZ / 2
-            }
-        });
+        this.initSensor(this.getOptionSensor(options));
 
         this.onCollisionWith(Bullet, ({component}) => {
             this.lifePoints--;
@@ -60,5 +49,20 @@ export abstract class BTP extends FGLBToon {
                 GameState.score += this.score;
             }
         });
+    }
+
+    getOptionSensor(options?: { positionOffset?: { x: number, y: number, z: number }, scaleOffset?: { x: number, y: number, z: number } }): FRigidBodyOptions {
+        return {
+            positionOffset: options?.positionOffset ?? {
+                x: this.transform.scaleX,
+                y: 3,
+                z: this.transform.scaleZ - 4
+            },
+            scaleOffset: options?.scaleOffset ?? {
+                x: 0,
+                y: -this.transform.scaleY / 2 + 3,
+                z: this.transform.scaleZ - this.transform.scaleZ / 2
+            }
+        }
     }
 }
