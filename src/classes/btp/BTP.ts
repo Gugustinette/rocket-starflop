@@ -33,19 +33,11 @@ export abstract class BTP extends FGLBToon {
             this.lifePoints--;
 
             if(this.lifePoints <= 0) {
-                new Explosion(this.scene, {
-                    position: {
-                        x: this.transform.x + this.transform.scaleX / 2,
-                        y: this.transform.y,
-                        z: this.transform.z + this.transform.scaleZ / 2
-                    },
-                    radius: this.transform.scaleX + this.transform.scaleZ,
-                })
-
-                this.deleted = true;
-                this.scene.removeComponent(this);
+                // Explode the BTP
+                this.explode();
+                // Remove the bullet from the scene
                 component.scene.removeComponent(component);
-
+                // Add the score
                 GameState.score += this.score;
             }
         });
@@ -64,5 +56,19 @@ export abstract class BTP extends FGLBToon {
                 z: this.transform.scaleZ - this.transform.scaleZ / 2
             }
         }
+    }
+
+    explode() {
+        new Explosion(this.scene, {
+            position: {
+                x: this.transform.x + this.transform.scaleX / 2,
+                y: this.transform.y,
+                z: this.transform.z + this.transform.scaleZ / 2
+            },
+            radius: this.transform.scaleX + this.transform.scaleZ,
+        })
+
+        this.deleted = true;
+        this.scene.removeComponent(this);
     }
 }
