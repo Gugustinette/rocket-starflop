@@ -63,7 +63,7 @@ export default class Craft extends FGLBToon {
     this.onCollisionWith(Meteor, ({ component }) => {
       const meteor = component as Meteor
       meteor.explode()
-      GameState.health -= 3
+      GameState.health--
     })
     this.initSensor({
       positionOffset: { x: 0, y: 0.5, z: 0 },
