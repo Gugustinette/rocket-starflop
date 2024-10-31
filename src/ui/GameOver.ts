@@ -1,3 +1,4 @@
+import { AudioManager } from "../audio/AudioManager";
 import { CraftState, GameState, State } from "../GameState";
 import { Button } from "./Button";
 
@@ -33,6 +34,7 @@ export class GameOver {
     // Wire GameState
     GameState.onStateChange((state) => {
       if (state === State.GAME_OVER) {
+        AudioManager.stopGame();
         this.__DOM__.style.opacity = '1';
       }
     });

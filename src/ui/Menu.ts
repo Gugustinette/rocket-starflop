@@ -1,3 +1,4 @@
+import { AudioManager } from "../audio/AudioManager";
 import { CraftState, GameState, State } from "../GameState";
 import { Button } from "./Button";
 
@@ -16,14 +17,18 @@ export class Menu {
     this.__DOM_LOGO__ = document.createElement('img');
     this.__DOM_LOGO__.src = '/rocket-starflop/logo.png';
     this.__DOM_LOGO__.style.width = '60vw';
+    this.__DOM_LOGO__.style.maxWidth = '600px';
     this.__DOM_LOGO__.style.height = 'auto';
     this.__DOM_LOGO__.style.marginBottom = '80px';
     this.__DOM__.appendChild(this.__DOM_LOGO__);
     // Create Play button
     this.playButton = new Button('Jouer');
+    this.playButton.__DOM__.id = 'play-button';
     this.playButton.onClick(() => {
       GameState.state = State.PLAYING;
       GameState.craftState = CraftState.LAUNCHING;
+      AudioManager.stopMenu();
+      AudioManager.playGame();
       this.__DOM__.style.opacity = '0';
       // Wait for the animation to end to set display to none
       setTimeout(() => {
@@ -53,11 +58,12 @@ export class Menu {
     this.__DOM__.style.alignItems = 'center';
     this.__DOM__.style.justifyContent = 'center';
     this.__DOM__.style.gap = '40px';
-    this.__DOM__.style.transition = 'all 0.5s ease';
+    this.__DOM__.style.transition = 'opacity 0.5s ease';
 
     // Wire GameState
     GameState.onStateChange((state) => {
       if (state === State.MENU) {
+        AudioManager.playMenu();
         this.__DOM__.style.display = 'flex';
         this.__DOM__.style.opacity = '1';
       }

@@ -1,6 +1,7 @@
 import { FScene, FVector3 } from '@fibbojs/3d';
 import * as THREE from 'three';
 import { GameState } from '../GameState';
+import { AudioManager } from '../audio/AudioManager';
 
 export interface ExplosionOptions {
   position: FVector3;
@@ -22,22 +23,13 @@ export class Explosion {
   private particleSpeed: number = 5;
   private particleLifespan: number = 2; // seconds
   private smokeLifespan: number = 3; // seconds
-  private explosionSound: HTMLAudioElement
 
   constructor(scene: FScene, options: ExplosionOptions) {
     this.scene = scene.scene;
     this.position = new THREE.Vector3(options.position.x, options.position.y, options.position.z);
     this.radius = options.radius;
 
-    if (import.meta.env.DEV)
-      this.explosionSound = new Audio('rocket-starflop/assets/explosion.wav')
-    else
-      this.explosionSound = new Audio('assets/explosion.wav')
-
-    // Play the shoot sound
-    const explosionSound = this.explosionSound.cloneNode() as HTMLAudioElement
-    explosionSound.volume = 0.1
-    explosionSound.play()
+    AudioManager.playExplosion();
 
     this.initParticles();
     this.initSmokeParticles();

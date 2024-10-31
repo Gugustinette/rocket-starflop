@@ -4,6 +4,7 @@ import { FController } from '@fibbojs/3d'
 import CraftCursor from './CraftCursor'
 import Craft from './Craft'
 import { CraftState, GameState } from '../../GameState'
+import { AudioManager } from '../../audio/AudioManager'
 
 const CRAFT_ANGLE = 120
 
@@ -32,11 +33,6 @@ export class CraftController extends FController {
    * The cursor instance.
    */
   cursor: CraftCursor
-
-  /**
-   * Audio elements
-   */
-  shootSound: HTMLAudioElement
 
   constructor(options: FControllerOptions) {
     super(options)
@@ -72,20 +68,11 @@ export class CraftController extends FController {
       this.inputs.left = false
     })
 
-    // Initialize the shoot sound
-    if (import.meta.env.DEV)
-      this.shootSound = new Audio('rocket-starflop/assets/shoot.wav')
-    else
-      this.shootSound = new Audio('assets/shoot.wav')
-
     // Create a cursor instance
     this.cursor = new CraftCursor()
     this.cursor.onClick((clickProgression) => {
       if (GameState.craftState !== CraftState.PLAYING) return
-      // Play the shoot sound
-      const shootSound = this.shootSound.cloneNode() as HTMLAudioElement
-      shootSound.volume = 0.1
-      shootSound.play()
+      AudioManager.playShoot()
       // Shoot
       this.component.shoot(clickProgression)
     })
