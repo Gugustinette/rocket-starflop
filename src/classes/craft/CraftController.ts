@@ -108,7 +108,15 @@ export class CraftController extends FController {
       this.component.transform.rotationDegreeZ += (targetRotationZ - this.component.transform.rotationDegreeZ) * delta * 16
     }
     else if (GameState.craftState === CraftState.DESTROYING) {
-      
+      // Simulate the fall of the craft
+      // Movement towards its place on the Y axis (From 10 to 0)
+      this.component.transform.y += (0 - this.component.transform.y) * delta * 6
+      // Movement towards its place on the Z axis (From 17 to 5)
+      this.component.transform.z += (0 - this.component.transform.z) * delta * 6
+      // Rotation on the X axis (From 0 to -30)
+      this.component.transform.rotationDegreeX += (-30 - this.component.transform.rotationDegreeX) * delta * 8
+      // Rotation on the Y axis (From 0 to 60)
+      this.component.transform.rotationDegreeY += (60 - this.component.transform.rotationDegreeY) * delta * 8
     }
   }
 }
