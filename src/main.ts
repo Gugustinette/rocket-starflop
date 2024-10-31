@@ -4,6 +4,7 @@ import { Scene } from './Scene'
 import { ScorePanel } from './ui/ScorePanel'
 import { Hearts } from './ui/Hearts'
 import { Menu } from './ui/Menu'
+import { GameOver } from './ui/GameOver'
 
 (async () => {
   // Initialize the scene
@@ -20,4 +21,5 @@ import { Menu } from './ui/Menu'
   new Menu()
   new ScorePanel()
   new Hearts()
+  new GameOver()
 })()

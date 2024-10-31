@@ -1,4 +1,4 @@
-import { GameState, State } from "../GameState";
+import { CraftState, GameState, State } from "../GameState";
 import { Button } from "./Button";
 
 export class Menu {
@@ -11,7 +11,7 @@ export class Menu {
   constructor() {
     // Create DOM
     this.__DOM__ = document.createElement('div');
-    this.__DOM__.className = 'score-panel';
+    this.__DOM__.className = 'menu-panel';
     // Create Logo
     this.__DOM_LOGO__ = document.createElement('img');
     this.__DOM_LOGO__.src = '/rocket-starflop/logo.png';
@@ -23,6 +23,12 @@ export class Menu {
     this.playButton = new Button('Jouer');
     this.playButton.onClick(() => {
       GameState.state = State.PLAYING;
+      GameState.craftState = CraftState.LAUNCHING;
+      this.__DOM__.style.opacity = '0';
+      // Wait for the animation to end to set display to none
+      setTimeout(() => {
+        this.__DOM__.style.display = 'none';
+      }, 500);
     })
     this.__DOM__.appendChild(this.playButton.__DOM__);
     // Create Scores button
@@ -47,14 +53,17 @@ export class Menu {
     this.__DOM__.style.alignItems = 'center';
     this.__DOM__.style.justifyContent = 'center';
     this.__DOM__.style.gap = '40px';
-    // this.__DOM__.style.padding = '20px';
+    this.__DOM__.style.transition = 'all 0.5s ease';
 
     // Wire GameState
     GameState.onStateChange((state) => {
-      console.log(`GameState: ${state}`);
+      if (state === State.MENU) {
+        this.__DOM__.style.display = 'flex';
+        this.__DOM__.style.opacity = '1';
+      }
     });
 
     // Append to body
-    // document.body.appendChild(this.__DOM__);
+    document.body.appendChild(this.__DOM__);
   }
 }

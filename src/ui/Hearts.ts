@@ -1,4 +1,4 @@
-import { GameState } from "../GameState";
+import { GameState, State } from "../GameState";
 import { Heart } from "./Heart";
 
 export class Hearts {
@@ -19,6 +19,8 @@ export class Hearts {
     this.__DOM__.style.display = 'flex';
     this.__DOM__.style.flexDirection = 'row';
     this.__DOM__.style.gap = '10px';
+    this.__DOM__.style.transform = 'translateX(calc(-100% - 20px))';
+    this.__DOM__.style.transition = 'all 0.5s ease';
     // Create Hearts
     this.heart1 = new Heart();
     this.__DOM__.appendChild(this.heart1.__DOM__);
@@ -28,6 +30,13 @@ export class Hearts {
     this.__DOM__.appendChild(this.heart3.__DOM__);
 
     // Wire GameState
+    GameState.onStateChange((state) => {
+      if (state === State.PLAYING) {
+        this.__DOM__.style.transform = 'translateX(0)';
+      } else {
+        this.__DOM__.style.transform = 'translateX(calc(-100% - 20px))';
+      }
+    })
     GameState.onHealthChange(() => {
       this.updateUI();
     });
