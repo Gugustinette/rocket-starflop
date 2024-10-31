@@ -1,13 +1,26 @@
+export enum State {
+  MENU = 'MENU',
+  PLAYING = 'PLAYING',
+  GAME_OVER = 'GAME_OVER',
+}
+
 export class GameState {
   // Properties
+  private static __STATE__: State = State.MENU
   private static __SCORE__: number = 0
   private static __SPEED__: number = 100
   private static __HEALTH__: number = 3
 
   // Callbacks
+  private static __CALLBACKS_ON_STATE_CHANGE__: ((state: State) => void)[] = []
   private static __CALLBACKS_ON_SCORE_CHANGE__: ((score: number) => void)[] = []
   private static __CALLBACKS_ON_SPEED_CHANGE__: ((speed: number) => void)[] = []
   private static __CALLBACKS_ON_HEALTH_CHANGE__: ((health: number) => void)[] = []
+
+  // Methods
+  static onStateChange(callback: (state: State) => void) {
+    this.__CALLBACKS_ON_STATE_CHANGE__.push(callback)
+  }
 
   static onScoreChange(callback: (score: number) => void) {
     this.__CALLBACKS_ON_SCORE_CHANGE__.push(callback)
@@ -22,6 +35,14 @@ export class GameState {
   }
 
   // Getters & setters
+  static get state() {
+    return this.__STATE__
+  }
+
+  static set state(state: State) {
+    this.__STATE__ = state
+    this.__CALLBACKS_ON_STATE_CHANGE__.forEach((callback) => callback(state))
+  }
 
   static get score() {
     return this.__SCORE__
