@@ -2,7 +2,7 @@ import {FRigidBodyOptions, FScene} from '@fibbojs/3d'
 import {FGLBToon} from "../util/FGLBToon.ts";
 import {Explosion} from "../../fx/Explosion.ts";
 import {Bullet} from "../weapon/Bullet.ts";
-import {GameState} from "../../GameState.ts";
+import {GameState, State} from "../../GameState.ts";
 
 export interface BTPOptions {
     position: { x: number, y: number, z: number };
@@ -37,8 +37,10 @@ export abstract class BTP extends FGLBToon {
                 this.explode();
                 // Remove the bullet from the scene
                 component.scene.removeComponent(component);
-                // Add the score
-                GameState.score += this.score;
+                if (GameState.state === State.PLAYING) {
+                    // Add the score
+                    GameState.score += this.score;
+                }
             }
         });
     }

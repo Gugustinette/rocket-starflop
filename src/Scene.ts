@@ -73,7 +73,7 @@ export class Scene extends FScene {
     // Add output pass
     this.composer.addPass(new OutputPass());
     // Add pixelated pass
-    this.composer.addPass(new RenderPixelatedPass( 2, this.scene, this.camera.__CAMERA__ ));
+    this.composer.addPass(new RenderPixelatedPass( 1.5, this.scene, this.camera.__CAMERA__ ));
     // Add FXAA pass
     const effectFXAA = new ShaderPass( FXAAShader );
     effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
