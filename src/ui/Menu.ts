@@ -1,6 +1,7 @@
 import { AudioManager } from "../audio/AudioManager";
 import { CraftState, GameState, State } from "../GameState";
 import { Button } from "./Button";
+import { ScoreLS } from "./ScoreLS";
 
 export class Menu {
   __DOM__: HTMLElement;
@@ -61,10 +62,22 @@ export class Menu {
 
     // Wire GameState
     GameState.onStateChange((state) => {
+      // Show menu and play menu music
       if (state === State.MENU) {
         AudioManager.playMenu();
         this.__DOM__.style.display = 'flex';
         this.__DOM__.style.opacity = '1';
+      } else if (state === State.GAME_OVER) {
+        // Add score
+        ScoreLS.addScore(GameState.score);
+        // Update score UI
+        const scores = ScoreLS.getScores();
+        for (let i = 0; i < 5; i++) {
+          const score = document.getElementById('score-' + i);
+          if (score) {
+            score.innerHTML = `${i + 1}. ${scores[i] || 'N/A'}`;
+          }
+        }
       }
     });
 
@@ -89,13 +102,36 @@ export class Menu {
 
     // Create Scores DOM
     this.__DOM_SCORES__ = document.createElement('div');
-    this.__DOM_SCORES__.innerHTML = 'Scores';
     this.__DOM_SCORES__.style.display = 'none';
     this.__DOM_SCORES__.style.flexDirection = 'column';
     this.__DOM_SCORES__.style.alignItems = 'center';
     this.__DOM_SCORES__.style.justifyContent = 'center';
     this.__DOM_SCORES__.style.gap = '20px';
+    // Title
+    const scoreTitle = document.createElement('div');
+    scoreTitle.innerHTML = 'Scores';
+    this.__DOM_SCORES__.appendChild(scoreTitle);
+    // Content
+    for (let index = 0; index < 5; index++) {
+      const score = document.createElement('div');
+      score.id = 'score-' + index;
+      score.style.background = 'rgba(0, 0, 0, 0.5)';
+      score.style.fontSize = '20px';
+      score.style.padding = '10px';
+      score.style.borderRadius = '5px';
+      score.style.width = '50vw';
+      score.style.maxWidth = '600px';
+      score.innerHTML = `${index + 1}. N/A`;
+      this.__DOM_SCORES__.appendChild(score);
+    }
     this.__DOM__.appendChild(this.__DOM_SCORES__);
+    // Load scores
+    ScoreLS.getScores().forEach((scoreData: number, index: number) => {
+      const score = this.__DOM_SCORES__.querySelector('#score-' + index);
+      if (score) {
+        score.innerHTML = `${index + 1}. ${scoreData}`;
+      }
+    })
     // Create Scores button
     this.scoresButton = new Button('Scores');
     this.scoresButton.onClick(() => {
