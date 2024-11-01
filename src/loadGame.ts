@@ -29,10 +29,9 @@ export function loadGame(scene: Scene) {
         landManager.frame(delta);
     })
 
-    if (true) {
-        if (true)
+    if (false) {
+        if (false)
             fDebug(scene)
-        /*
         craft.controller = new CraftController(scene, { 
             component: craft 
         })
@@ -40,6 +39,5 @@ export function loadGame(scene: Scene) {
         scene.camera = new FGameCamera(scene, {
          target: craft,
         })
-         */
     }
 }
