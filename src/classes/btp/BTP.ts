@@ -26,8 +26,8 @@ export abstract class BTP extends FGLBToon {
         this.lifePoints = options.lifePoints ?? 1;
     }
 
-    createSensor(options?: { positionOffset?: { x: number, y: number, z: number }, scaleOffset?: { x: number, y: number, z: number } }) {
-        this.initSensor(this.getOptionSensor(options));
+    createSensor() {
+        this.initSensor(this.getOptionSensor());
 
         this.onCollisionWith(Bullet, ({component}) => {
             this.lifePoints--;
@@ -45,14 +45,14 @@ export abstract class BTP extends FGLBToon {
         });
     }
 
-    getOptionSensor(options?: { positionOffset?: { x: number, y: number, z: number }, scaleOffset?: { x: number, y: number, z: number } }): FRigidBodyOptions {
+    getOptionSensor(): FRigidBodyOptions {
         return {
-            positionOffset: options?.positionOffset ?? {
+            positionOffset: {
                 x: this.transform.scaleX,
                 y: 3,
                 z: this.transform.scaleZ - 4
             },
-            scaleOffset: options?.scaleOffset ?? {
+            scaleOffset: {
                 x: 0,
                 y: -this.transform.scaleY / 2 + 3,
                 z: this.transform.scaleZ - this.transform.scaleZ / 2

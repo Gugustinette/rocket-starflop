@@ -1,4 +1,4 @@
-import type { FScene } from '@fibbojs/3d'
+import type {FRigidBodyOptions, FScene} from '@fibbojs/3d'
 import { MeteorController } from './MeteorController'
 // import { FGLBToon } from '../util/FGLBToon'
 import { BTP } from '../btp/BTP'
@@ -31,10 +31,14 @@ export default class Meteor extends BTP {
       endPosition: endPosition,
     })
 
-    this.createSensor({
+    this.createSensor()
+  }
+
+  getOptionSensor(): FRigidBodyOptions {
+    return {
       positionOffset: { x: 0, y: 2, z: 0 },
       scaleOffset: { x: -6.5, y: -7, z: -6.5 },
-    })
+    }
   }
 
   emitOnLoaded(): void {

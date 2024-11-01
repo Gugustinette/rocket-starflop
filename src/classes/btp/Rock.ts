@@ -1,8 +1,36 @@
-import type { FScene } from '@fibbojs/3d'
+import type {FRigidBodyOptions, FScene} from '@fibbojs/3d'
 import {BTP, BTPOptions} from "./BTP.ts";
 import {randomInt} from "../util/Random.ts";
 
-export class Rock extends BTP {
+abstract class RockBase extends BTP {
+    protected constructor(scene: FScene, options: BTPOptions) {
+        super(scene, {
+            name: options.name ?? '',
+            position: options.position,
+            scale: options.scale,
+            lifePoints: 10
+        })
+
+        this.createSensor()
+    }
+
+    getOptionSensor(): FRigidBodyOptions {
+        return {
+            positionOffset: {
+                x: this.transform.scaleX,
+                y: 0,
+                z: this.transform.scaleZ / 2 + this.transform.scaleZ / 4
+            },
+            scaleOffset: {
+                x: - this.transform.scaleX / 2,
+                y: - this.transform.scaleY / 3,
+                z: - this.transform.scaleZ / 2
+            }
+        }
+    }
+}
+
+export class Rock extends RockBase {
     constructor(scene: FScene, options: BTPOptions) {
         super(scene, {
             name: 'rock',
@@ -10,12 +38,10 @@ export class Rock extends BTP {
             scale: options.scale,
             lifePoints: 10
         })
-
-        this.createSensor();
     }
 }
 
-export class RockLargeA extends BTP {
+export class RockLargeA extends RockBase {
     constructor(scene: FScene, options: BTPOptions) {
         super(scene, {
             name: 'rock_largeA',
@@ -23,12 +49,10 @@ export class RockLargeA extends BTP {
             scale: options.scale,
             lifePoints: 10
         })
-
-        this.createSensor();
     }
 }
 
-export class RockLargeB extends BTP {
+export class RockLargeB extends RockBase {
     constructor(scene: FScene, options: BTPOptions) {
         super(scene, {
             name: 'rock_largeB',
@@ -36,12 +60,10 @@ export class RockLargeB extends BTP {
             scale: options.scale,
             lifePoints: 10
         })
-
-        this.createSensor();
     }
 }
 
-export class RockCrystals extends BTP {
+export class RockCrystals extends RockBase {
     constructor(scene: FScene, options: BTPOptions) {
         super(scene, {
             name: 'rock_crystals',
@@ -49,12 +71,10 @@ export class RockCrystals extends BTP {
             scale: options.scale,
             lifePoints: 10
         })
-
-        this.createSensor();
     }
 }
 
-export class RockCrystalsLargeA extends BTP {
+export class RockCrystalsLargeA extends RockBase {
     constructor(scene: FScene, options: BTPOptions) {
         super(scene, {
             name: 'rock_crystalsLargeA',
@@ -62,12 +82,10 @@ export class RockCrystalsLargeA extends BTP {
             scale: options.scale,
             lifePoints: 10
         })
-
-        this.createSensor();
     }
 }
 
-export class RockCrystalsLargeB extends BTP {
+export class RockCrystalsLargeB extends RockBase {
     constructor(scene: FScene, options: BTPOptions) {
         super(scene, {
             name: 'rock_crystalsLargeB',
@@ -75,8 +93,6 @@ export class RockCrystalsLargeB extends BTP {
             scale: options.scale,
             lifePoints: 10
         })
-
-        this.createSensor();
     }
 }
 
@@ -107,7 +123,7 @@ export function createLargeRock(scene: FScene, options: BTPOptions) {
     return new Rock(scene, options);
 }
 
-export function createMontain(scene: FScene, options: BTPOptions) {
+export function createMountain(scene: FScene, options: BTPOptions) {
     let size = randomInt(50, 100);
     options.scale = {
         x: size - 15,

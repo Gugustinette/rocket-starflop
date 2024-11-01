@@ -7,6 +7,7 @@ import { OscilloGun } from '../weapon/OscilloGun'
 import { CraftState, GameState, State } from '../../GameState'
 import {LevelUpPanel} from "../../ui/LevelUpPanel.ts";
 import Meteor from '../meteor/Meteor.ts'
+import {RocketBase} from "../btp/Rocket.ts";
 
 export default class Craft extends FGLBToon {
   // Metadata
@@ -65,6 +66,13 @@ export default class Craft extends FGLBToon {
       meteor.explode()
       GameState.health--
     })
+    this.onCollisionWith(RocketBase, ({ component }) => {
+      const rocket = component as RocketBase
+      rocket.explode()
+      GameState.health--
+    });
+
+
     this.initSensor({
       positionOffset: { x: 0, y: 0.6, z: 0.5 },
       scaleOffset: { x: -0.8, y: -1.5, z: -0.8 },

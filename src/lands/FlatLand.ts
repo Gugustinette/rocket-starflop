@@ -5,7 +5,7 @@ import Barrels from "../classes/btp/Barrels.ts";
 import {createHangar} from "../classes/btp/Hangar.ts";
 import {randomInt} from "../classes/util/Random.ts";
 import {createCrater} from "../classes/btp/Crater.ts";
-import {createLargeRock, createMontain} from "../classes/btp/Rock.ts";
+import {createLargeRock, createMountain} from "../classes/btp/Rock.ts";
 
 export default class FlatLand extends Land {
     constructor(scene: FScene, options: LandOptions) {
@@ -89,7 +89,7 @@ export default class FlatLand extends Land {
             });
 
             if(i % 2 === 0) {
-                let mountain = createMontain(this.scene, {
+                let mountain = createMountain(this.scene, {
                     position: {
                         x: randomInt(120, 150) * (randomInt(0, 1) === 0 ? -1 : 1) - 30,
                         y: 0,

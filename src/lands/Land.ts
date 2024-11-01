@@ -1,6 +1,8 @@
 import type {FScene} from '@fibbojs/3d'
 import {BTP} from "../classes/btp/BTP.ts";
 import {GameState} from "../GameState.ts";
+import {randomInt} from "../classes/util/Random.ts";
+import {createCrater} from "../classes/btp/Crater.ts";
 
 export interface LandOptions {
     position: number;
@@ -36,12 +38,26 @@ export abstract class Land {
     delete() {
         this.parcels.forEach(parcel => {
             if(this.scene.components.includes(parcel)) {
-                parcel.scene.removeComponent(parcel);
+                this.scene.removeComponent(parcel);
             }
         });
     }
 
     getZ() {
         return this.parcels[0].transform.z;
+    }
+
+    addCraters() {
+        for (let i = 0; i < randomInt(3, 10); i++) {
+            let crater = createCrater(this.scene, {
+                position: {
+                    x: randomInt(-70, 70),
+                    y: 0,
+                    z: this.__DEPARTURE__ + this.__LENGTH__ + randomInt(-50, 50),
+                }
+            })
+
+            this.parcels.push(crater);
+        }
     }
 }

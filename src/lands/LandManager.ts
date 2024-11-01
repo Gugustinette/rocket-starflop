@@ -20,7 +20,7 @@ export class LandManager {
         this.lands.add(new FlatLand(this.scene, {
             position: 2
         }));
-        this.lands.add(new FlatLand(this.scene, {
+        this.lands.add(new SpaceBaseLand(this.scene, {
             position: 3
         }));
         this.lands.add(new FlatLand(this.scene, {
@@ -37,17 +37,18 @@ export class LandManager {
     }
 
     generate(z: number) {
-        if(randomInt(0, 10) == 5) {
+        if(randomInt(0, 10) >= 7) {
             this.add(new SpaceBaseLand(this.scene, {
                 position: this.__SIZE__,
                 offset: z
-            }))
+            }));
         }
         else {
             this.add(new FlatLand(this.scene, {
                 position: this.__SIZE__,
                 offset: z
-            }));
+            }))
+
         }
     }
 

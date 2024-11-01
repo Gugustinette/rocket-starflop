@@ -58,6 +58,7 @@ Error: ${reason}
         } else {
           soundCopy.pause()
           soundCopy.currentTime = 0
+          soundCopy.remove()
           // Remove the sound from the list
           this.soundCopies = this.soundCopies.filter(sound => sound !== soundCopy)
         }

@@ -13,6 +13,7 @@ export function loadGame(scene: Scene) {
     const craft = new Craft(scene)
     // Create the land manager
     const landManager = new LandManager(scene);
+
     // Create the meteor manager
     new MeteorManager(scene);
     // Launch the music
