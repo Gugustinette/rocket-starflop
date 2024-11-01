@@ -66,8 +66,8 @@ export default class Craft extends FGLBToon {
       GameState.health--
     })
     this.initSensor({
-      positionOffset: { x: 0, y: 0.5, z: 0 },
-      scaleOffset: { x: -0.5, y: -1, z: -0.5 },
+      positionOffset: { x: 0, y: 0.6, z: 0.5 },
+      scaleOffset: { x: -0.8, y: -1.5, z: -0.8 },
     })
   }
 
