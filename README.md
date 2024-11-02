@@ -17,3 +17,7 @@ Les assets proviennent tous des packs suivants :
 - https://kenney.nl/assets/space-kit
 - https://kenney.nl/assets/space-station-kit
 - https://fliflifly.itch.io/hearts-and-health-bar
+
+Les SFX ont été trouvés sur [SampleFocus](https://samplefocus.com/).
+
+Musiques par [Augustin Mercier](https://github.com/gugustinette).
