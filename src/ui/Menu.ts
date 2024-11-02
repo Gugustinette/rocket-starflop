@@ -8,10 +8,13 @@ export class Menu {
   __DOM_LOGO__: HTMLImageElement;
   playButton: Button;
   scoresButton: Button;
+  commandesButton: Button;
   settingsButton: Button;
   creditsButton: Button;
 
   __DOM_SCORES__: HTMLElement;
+
+  __DOM_COMMANDES__: HTMLElement;
 
   __DOM_SETTINGS__: HTMLElement;
 
@@ -47,6 +50,35 @@ export class Menu {
       }
     })
     this.__DOM__.appendChild(this.playButton.__DOM__);
+    // Create Scores button
+    this.scoresButton = new Button('Scores');
+    this.scoresButton.onClick(() => {
+      this.__DOM_SCORES__.style.display = 'flex';
+      loadSecondaryPanel();
+    })
+    this.__DOM__.appendChild(this.scoresButton.__DOM__);
+    // Create Commandes button
+    this.commandesButton = new Button('Commandes');
+    this.commandesButton.onClick(() => {
+      this.__DOM_COMMANDES__.style.display = 'flex';
+      loadSecondaryPanel();
+    })
+    this.__DOM__.appendChild(this.commandesButton.__DOM__);
+    // Create Settings button
+    this.settingsButton = new Button('Paramètres');
+    this.settingsButton.onClick(() => {
+      this.__DOM_SETTINGS__.style.display = 'flex';
+      loadSecondaryPanel();
+    })
+    this.__DOM__.appendChild(this.settingsButton.__DOM__);
+    // Create Credits button
+    this.creditsButton = new Button('Crédits');
+    this.creditsButton.onClick(() => {
+      this.__DOM_CREDITS__.style.display = 'flex';
+      loadSecondaryPanel();
+    })
+    this.__DOM__.appendChild(this.creditsButton.__DOM__);
+
     // Style
     this.__DOM__.style.userSelect = 'none';
     this.__DOM__.style.position = 'absolute';
@@ -92,6 +124,7 @@ export class Menu {
       this.__DOM_LOGO__.style.maxWidth = '300px';
       this.playButton.__DOM__.style.display = 'none';
       this.scoresButton.__DOM__.style.display = 'none';
+      this.commandesButton.__DOM__.style.display = 'none';
       this.settingsButton.__DOM__.style.display = 'none';
       this.creditsButton.__DOM__.style.display = 'none';
     }
@@ -102,8 +135,10 @@ export class Menu {
       this.__DOM_SCORES__.style.display = 'none';
       this.__DOM_SETTINGS__.style.display = 'none';
       this.__DOM_CREDITS__.style.display = 'none';
+      this.__DOM_COMMANDES__.style.display = 'none';
       this.playButton.__DOM__.style.display = 'block';
       this.scoresButton.__DOM__.style.display = 'block';
+      this.commandesButton.__DOM__.style.display = 'block';
       this.settingsButton.__DOM__.style.display = 'block';
       this.creditsButton.__DOM__.style.display = 'block';
     }
@@ -140,19 +175,41 @@ export class Menu {
         score.innerHTML = `${index + 1}. ${scoreData}`;
       }
     })
-    // Create Scores button
-    this.scoresButton = new Button('Scores');
-    this.scoresButton.onClick(() => {
-      this.__DOM_SCORES__.style.display = 'flex';
-      loadSecondaryPanel();
-    })
-    this.__DOM__.appendChild(this.scoresButton.__DOM__);
     // Create Back button
     const backButtonScores = new Button('Retour');
     backButtonScores.onClick(() => {
       hideSecondaryPanel();
     })
     this.__DOM_SCORES__.appendChild(backButtonScores.__DOM__);
+
+    // Create Commandes DOM
+    this.__DOM_COMMANDES__ = document.createElement('div');
+    this.__DOM_COMMANDES__.style.display = 'none';
+    this.__DOM_COMMANDES__.style.flexDirection = 'column';
+    this.__DOM_COMMANDES__.style.alignItems = 'center';
+    this.__DOM_COMMANDES__.style.justifyContent = 'center';
+    this.__DOM_COMMANDES__.style.gap = '20px';
+    // Title
+    const commandesTitle = document.createElement('div');
+    commandesTitle.innerHTML = 'Commandes';
+    this.__DOM_COMMANDES__.appendChild(commandesTitle);
+    // Content
+    const contentCommandes = document.createElement('div');
+    contentCommandes.style.fontSize = '20px';
+    contentCommandes.innerHTML = `
+    - [Q] et [D] pour bouger<br>
+    - [Clique gauche] pour tirer<br>
+    - [Maintenir clique gauche] pour tirer en continu
+    `;
+    this.__DOM_COMMANDES__.appendChild(contentCommandes);
+    // Create Back button
+    const backButtonCommandes = new Button('Retour');
+    backButtonCommandes.onClick(() => {
+      hideSecondaryPanel();
+    })
+    this.__DOM_COMMANDES__.appendChild(backButtonCommandes.__DOM__);
+    // Append to DOM
+    this.__DOM__.appendChild(this.__DOM_COMMANDES__);
 
     // Create Settings DOM
     this.__DOM_SETTINGS__ = document.createElement('div');
@@ -249,13 +306,6 @@ export class Menu {
     divMusicVolume.appendChild(musicVolume);
     document.head.appendChild(style);
     this.__DOM_SETTINGS__.appendChild(divMusicVolume);
-    // Create Settings button
-    this.settingsButton = new Button('Paramètres');
-    this.settingsButton.onClick(() => {
-      this.__DOM_SETTINGS__.style.display = 'flex';
-      loadSecondaryPanel();
-    })
-    this.__DOM__.appendChild(this.settingsButton.__DOM__);
     // Create Back button
     const backButtonSettings = new Button('Retour');
     backButtonSettings.onClick(() => {
@@ -275,7 +325,6 @@ export class Menu {
     // Title
     creditTitle.innerHTML = 'Crédits';
     this.__DOM_CREDITS__.appendChild(creditTitle);
-    this.__DOM__.appendChild(this.__DOM_CREDITS__);
     // Content
     const content = document.createElement('div');
     content.style.fontSize = '20px';
@@ -296,19 +345,14 @@ export class Menu {
     Moteur de jeu : <a href="https://fibbo.dev" target="_blank">Fibbo</a>
     `;
     this.__DOM_CREDITS__.appendChild(content);
-    // Create Credits button
-    this.creditsButton = new Button('Crédits');
-    this.creditsButton.onClick(() => {
-      this.__DOM_CREDITS__.style.display = 'flex';
-      loadSecondaryPanel();
-    })
-    this.__DOM__.appendChild(this.creditsButton.__DOM__);
     // Create Back button
     const backButtonCredits = new Button('Retour');
     backButtonCredits.onClick(() => {
       hideSecondaryPanel();
     })
     this.__DOM_CREDITS__.appendChild(backButtonCredits.__DOM__);
+    // Append to DOM
+    this.__DOM__.appendChild(this.__DOM_CREDITS__);
 
     // Append to body
     document.body.appendChild(this.__DOM__);
