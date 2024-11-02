@@ -69,7 +69,6 @@ export class Menu {
     GameState.onStateChange((state) => {
       // Show menu and play menu music
       if (state === State.MENU) {
-        console.log('ok 1')
         AudioManager.playMenu();
         this.__DOM__.style.display = 'flex';
         this.__DOM__.style.opacity = '1';
