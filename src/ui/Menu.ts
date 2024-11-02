@@ -8,9 +8,12 @@ export class Menu {
   __DOM_LOGO__: HTMLImageElement;
   playButton: Button;
   scoresButton: Button;
+  settingsButton: Button;
   creditsButton: Button;
 
   __DOM_SCORES__: HTMLElement;
+
+  __DOM_SETTINGS__: HTMLElement;
 
   __DOM_CREDITS__: HTMLElement;
 
@@ -87,6 +90,7 @@ export class Menu {
       this.__DOM_LOGO__.style.maxWidth = '300px';
       this.playButton.__DOM__.style.display = 'none';
       this.scoresButton.__DOM__.style.display = 'none';
+      this.settingsButton.__DOM__.style.display = 'none';
       this.creditsButton.__DOM__.style.display = 'none';
     }
     const hideSecondaryPanel = () => {
@@ -94,9 +98,11 @@ export class Menu {
       this.__DOM_LOGO__.style.marginBottom = '80px';
       this.__DOM_LOGO__.style.maxWidth = '600px';
       this.__DOM_SCORES__.style.display = 'none';
+      this.__DOM_SETTINGS__.style.display = 'none';
       this.__DOM_CREDITS__.style.display = 'none';
       this.playButton.__DOM__.style.display = 'block';
       this.scoresButton.__DOM__.style.display = 'block';
+      this.settingsButton.__DOM__.style.display = 'block';
       this.creditsButton.__DOM__.style.display = 'block';
     }
 
@@ -146,6 +152,122 @@ export class Menu {
     })
     this.__DOM_SCORES__.appendChild(backButtonScores.__DOM__);
 
+    // Create Settings DOM
+    this.__DOM_SETTINGS__ = document.createElement('div');
+    this.__DOM_SETTINGS__.style.display = 'none';
+    this.__DOM_SETTINGS__.style.flexDirection = 'column';
+    this.__DOM_SETTINGS__.style.alignItems = 'center';
+    this.__DOM_SETTINGS__.style.justifyContent = 'center';
+    this.__DOM_SETTINGS__.style.gap = '20px';
+    const settingsTitle = document.createElement('div');
+    // Title
+    settingsTitle.innerHTML = 'Paramètres';
+    this.__DOM_SETTINGS__.appendChild(settingsTitle);
+    // Content
+    const contentSettings = document.createElement('div');
+    contentSettings.style.fontSize = '20px';
+    contentSettings.innerHTML = `Volume de la musique :`;
+    this.__DOM_SETTINGS__.appendChild(contentSettings);
+    // Add music volume control
+    const divMusicVolume = document.createElement('div');
+    divMusicVolume.style.top = '20px';
+    divMusicVolume.style.right = '20px';
+    divMusicVolume.style.display = 'flex';
+    divMusicVolume.style.alignItems = 'center';
+    divMusicVolume.style.gap = '10px';
+    divMusicVolume.style.marginBottom = '40px';
+    // Add music icon
+    const musicIcon = document.createElement('img');
+    musicIcon.src = '/rocket-starflop/assets/ui/icons/music_icon.png';
+    musicIcon.width = 20;
+    musicIcon.height = 20;
+    musicIcon.style.cursor = 'pointer';
+    musicIcon.onclick = () => {
+      let musicVolume = document.getElementById('music-volume') as HTMLInputElement | null;
+      if(!musicVolume) {
+        return;
+      }
+      if(AudioManager.generalVolume > 0) {
+        AudioManager.setVolume(0);
+        musicVolume.value = '0';
+        if (typeof musicVolume.onchange === 'function') {
+          musicVolume.onchange(new Event('change'));
+        }
+        if (typeof musicVolume.oninput === 'function') {
+          musicVolume.oninput(new Event('input'));
+        }
+      }
+      else {
+        AudioManager.setVolume(0.2);
+        musicVolume.value = '20';
+        if (typeof musicVolume.onchange === 'function') {
+          musicVolume.onchange(new Event('change'));
+        }
+        if (typeof musicVolume.oninput === 'function') {
+          musicVolume.oninput(new Event('input'));
+        }
+      }
+    }
+    divMusicVolume.appendChild(musicIcon);
+    // Add music volume range
+    const musicVolume = document.createElement('input');
+    musicVolume.type = 'range';
+    musicVolume.min = '0';
+    musicVolume.max = '20';
+    musicVolume.step = '0.5';
+    musicVolume.value = '20';
+    musicVolume.id = 'music-volume';
+    const setBackgroundMusicVolume = () => {
+      let min = +musicVolume.min
+      let max = +musicVolume.max
+      let value = +musicVolume.value
+      musicVolume.style.background = `linear-gradient(to right, orange 0%, orange ${(value-min)/(max-min)*100}%, #404040 ${(value-min)/(max-min)*100}%, #404040 100%)`
+    }
+    setBackgroundMusicVolume();
+    musicVolume.oninput = () => {
+      setBackgroundMusicVolume();
+    };
+    musicVolume.onchange = () => {
+      AudioManager.setVolume(Number(musicVolume.value) / 100);
+    }
+    const style = document.createElement('style');
+    style.innerHTML = `
+    #music-volume {
+      height: 4px;
+      width: 150px;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+
+    input[type='range']::-webkit-slider-thumb {
+      width: 6px;
+      -webkit-appearance: none;
+      height: 12px;
+      background: orange;
+      cursor: pointer;
+    }
+    `;
+    // Append to DOM
+    divMusicVolume.appendChild(musicVolume);
+    document.head.appendChild(style);
+    this.__DOM_SETTINGS__.appendChild(divMusicVolume);
+    // Create Settings button
+    this.settingsButton = new Button('Paramètres');
+    this.settingsButton.onClick(() => {
+      this.__DOM_SETTINGS__.style.display = 'flex';
+      loadSecondaryPanel();
+    })
+    this.__DOM__.appendChild(this.settingsButton.__DOM__);
+    // Create Back button
+    const backButtonSettings = new Button('Retour');
+    backButtonSettings.onClick(() => {
+      hideSecondaryPanel();
+    })
+    this.__DOM_SETTINGS__.appendChild(backButtonSettings.__DOM__);
+    this.__DOM__.appendChild(this.__DOM_SETTINGS__);
+
     // Create Credits DOM
     this.__DOM_CREDITS__ = document.createElement('div');
     this.__DOM_CREDITS__.style.display = 'none';
@@ -191,98 +313,6 @@ export class Menu {
       hideSecondaryPanel();
     })
     this.__DOM_CREDITS__.appendChild(backButtonCredits.__DOM__);
-
-    // Add music volume control
-    const divMusicVolume = document.createElement('div');
-    divMusicVolume.style.position = 'absolute';
-    divMusicVolume.style.top = '20px';
-    divMusicVolume.style.right = '20px';
-    divMusicVolume.style.display = 'flex';
-    divMusicVolume.style.alignItems = 'center';
-    divMusicVolume.style.gap = '10px';
-
-    const musicIcon = document.createElement('img');
-    musicIcon.src = '/rocket-starflop/assets/ui/icons/music_icon.png';
-    musicIcon.width = 20;
-    musicIcon.height = 20;
-    musicIcon.style.cursor = 'pointer';
-    musicIcon.onclick = () => {
-      let musicVolume = document.getElementById('music-volume') as HTMLInputElement | null;
-      if(!musicVolume) {
-        return;
-      }
-
-      if(AudioManager.generalVolume > 0) {
-        AudioManager.setVolume(0);
-        musicVolume.value = '0';
-        if (typeof musicVolume.onchange === 'function') {
-          musicVolume.onchange(new Event('change'));
-        }
-        if (typeof musicVolume.oninput === 'function') {
-          musicVolume.oninput(new Event('input'));
-        }
-      }
-      else {
-        AudioManager.setVolume(0.2);
-        musicVolume.value = '20';
-        if (typeof musicVolume.onchange === 'function') {
-          musicVolume.onchange(new Event('change'));
-        }
-        if (typeof musicVolume.oninput === 'function') {
-          musicVolume.oninput(new Event('input'));
-        }
-      }
-    }
-    divMusicVolume.appendChild(musicIcon);
-
-    const musicVolume = document.createElement('input');
-
-    musicVolume.type = 'range';
-    musicVolume.min = '0';
-    musicVolume.max = '20';
-    musicVolume.step = '0.5';
-    musicVolume.value = '20';
-    musicVolume.id = 'music-volume';
-
-
-    const setBackgroundMusicVolume = () => {
-      let min = +musicVolume.min
-      let max = +musicVolume.max
-      let value = +musicVolume.value
-      musicVolume.style.background = `linear-gradient(to right, orange 0%, orange ${(value-min)/(max-min)*100}%, #404040 ${(value-min)/(max-min)*100}%, #404040 100%)`
-    }
-    setBackgroundMusicVolume();
-    musicVolume.oninput = () => {
-      setBackgroundMusicVolume();
-    };
-    musicVolume.onchange = () => {
-      AudioManager.setVolume(Number(musicVolume.value) / 100);
-    }
-
-    const style = document.createElement('style');
-    style.innerHTML = `
-    #music-volume {
-      height: 4px;
-      width: 150px;
-      outline: none;
-      appearance: none;
-      -webkit-appearance: none;
-      cursor: pointer;
-    }
-
-    input[type='range']::-webkit-slider-thumb {
-      width: 6px;
-      -webkit-appearance: none;
-      height: 12px;
-      background: orange;
-      cursor: pointer;
-    }
-    `;
-
-    // Append to DOM
-    divMusicVolume.appendChild(musicVolume);
-    document.head.appendChild(style);
-    this.__DOM__.appendChild(divMusicVolume);
 
     // Append to body
     document.body.appendChild(this.__DOM__);

@@ -6,6 +6,7 @@ import { CraftController } from "./classes/craft/CraftControllerDebug.ts";
 import { Scene } from "./Scene.ts";
 import { fDebug } from "@fibbojs/devtools";
 import { AudioManager } from "./audio/AudioManager.ts";
+import { GameState, State } from "./GameState.ts";
 
 export function loadGame(scene: Scene) {
     // Create the craft
@@ -18,7 +19,6 @@ export function loadGame(scene: Scene) {
     // Launch the music
     AudioManager.playMenu();
 
-    /*
     let hasInteracted = false;
     document.addEventListener('click', (event) => {
         const target = event.target as HTMLElement;
@@ -27,7 +27,6 @@ export function loadGame(scene: Scene) {
             hasInteracted = true;
         }
     });
-     */
 
     scene.onFrame((delta: number) => {
         landManager.frame(delta);
