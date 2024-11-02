@@ -16,8 +16,6 @@ export function loadGame(scene: Scene) {
 
     // Create the meteor manager
     new MeteorManager(scene);
-    // Launch the music
-    AudioManager.playMenu();
 
     let hasInteracted = false;
     document.addEventListener('click', (event) => {
