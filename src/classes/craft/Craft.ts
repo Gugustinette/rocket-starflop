@@ -47,11 +47,11 @@ export default class Craft extends FGLBToon {
     GameState.onScoreChange((score) => {
       if (score >= 100 && this.level === 1) {
         this.levelUp()
-      } else if (score >= 300 && this.level === 2) {
+      } else if (score >= 500 && this.level === 2) {
         this.levelUp()
-      } else if (score >= 500 && this.level === 3) {
+      } else if (score >= 1000 && this.level === 3) {
         this.levelUp()
-      } else if (score >= 1000 && this.level === 4) {
+      } else if (score >= 1500 && this.level === 4) {
         this.levelUp()
       } else if (score >= 2000 && this.level === 5) {
         this.levelUp()

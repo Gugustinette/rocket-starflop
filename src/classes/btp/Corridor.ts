@@ -10,7 +10,7 @@ abstract class CorridorBase extends BTP {
             lifePoints: 3
         })
 
-        this.score = 5
+        this.score = 10
 
         this.createSensor()
     }

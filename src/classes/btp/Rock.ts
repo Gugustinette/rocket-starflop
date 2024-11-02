@@ -11,7 +11,7 @@ abstract class RockBase extends BTP {
             lifePoints: options.lifePoints
         })
 
-        this.score = 20;
+        this.score = 50;
 
         this.createSensor()
     }

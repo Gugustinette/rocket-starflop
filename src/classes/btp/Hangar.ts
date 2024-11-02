@@ -11,7 +11,7 @@ export class Hangar extends BTP {
             lifePoints: 3
         })
 
-        this.score = 10;
+        this.score = 30;
 
         this.createSensor()
     }

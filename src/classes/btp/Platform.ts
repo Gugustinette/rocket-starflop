@@ -10,7 +10,7 @@ export class PlatformLarge extends BTP {
             lifePoints: 1
         })
 
-        this.score = 20;
+        this.score = 30;
 
         this.createSensor()
     }

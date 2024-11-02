@@ -11,7 +11,7 @@ export default class Barrels extends BTP {
             lifePoints: 2,
         })
 
-        this.score = 20;
+        this.score = 50;
 
         this.createSensor();
     }

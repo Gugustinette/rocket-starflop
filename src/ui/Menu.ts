@@ -34,15 +34,17 @@ export class Menu {
     this.playButton = new Button('Jouer');
     this.playButton.__DOM__.id = 'play-button';
     this.playButton.onClick(() => {
-      GameState.state = State.PLAYING;
-      GameState.craftState = CraftState.LAUNCHING;
-      AudioManager.stopMenu();
-      AudioManager.playGame();
-      this.__DOM__.style.opacity = '0';
-      // Wait for the animation to end to set display to none
-      setTimeout(() => {
-        this.__DOM__.style.display = 'none';
-      }, 500);
+      if(GameState.state !== State.PLAYING) {
+        GameState.state = State.PLAYING;
+        GameState.craftState = CraftState.LAUNCHING;
+        AudioManager.stopMenu();
+        AudioManager.playGame();
+        this.__DOM__.style.opacity = '0';
+        // Wait for the animation to end to set display to none
+        setTimeout(() => {
+          this.__DOM__.style.display = 'none';
+        }, 500);
+      }
     })
     this.__DOM__.appendChild(this.playButton.__DOM__);
     // Style
@@ -67,6 +69,7 @@ export class Menu {
     GameState.onStateChange((state) => {
       // Show menu and play menu music
       if (state === State.MENU) {
+        console.log('ok 1')
         AudioManager.playMenu();
         this.__DOM__.style.display = 'flex';
         this.__DOM__.style.opacity = '1';
