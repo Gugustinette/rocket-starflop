@@ -11,10 +11,12 @@ export class AudioManager {
   // SFX
   static shootSound: Sound = new Sound('assets/audio/shoot.wav')
   static explosionSound: Sound = new Sound('assets/audio/explosion.wav')
+  static hitSound: Sound = new Sound('assets/audio/hit.mp3')
+
+  static generalVolume: number = 0.2
 
   // Players
   static playShoot() {
-    this.shootSound.volume = 0.05
     this.shootSound.play()
   }
 
@@ -22,10 +24,12 @@ export class AudioManager {
     this.explosionSound.play()
   }
 
+  static playHit() {
+    this.hitSound.play()
+  }
+
   static playMenu() {
     // Increase volume
-    this.menuIntro.volume = 0.15
-    this.menuLoop.volume = 0.15
     this.menuLoop.loop = true
     // Play
     this.menuIntro.play()
@@ -41,8 +45,6 @@ export class AudioManager {
 
   static playGame() {
     // Increase volume
-    this.gameIntro.volume = 0.2
-    this.gameLoop.volume = 0.2
     this.gameLoop.loop = true
     // Play
     this.gameIntro.play()
@@ -54,5 +56,18 @@ export class AudioManager {
   static stopGame() {
     this.gameIntro.stop()
     this.gameLoop.stop()
+  }
+
+  static setVolume(value: number) {
+    this.generalVolume = value
+
+    this.menuIntro.volume = value
+    this.menuLoop.volume = value
+    this.gameIntro.volume = value
+    this.gameLoop.volume = value
+
+    this.shootSound.volume = value / 5
+    this.explosionSound.volume = value / 2
+    this.hitSound.volume = value / 5
   }
 }

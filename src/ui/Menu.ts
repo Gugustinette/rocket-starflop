@@ -192,6 +192,98 @@ export class Menu {
     })
     this.__DOM_CREDITS__.appendChild(backButtonCredits.__DOM__);
 
+    // Add music volume control
+    const divMusicVolume = document.createElement('div');
+    divMusicVolume.style.position = 'absolute';
+    divMusicVolume.style.top = '20px';
+    divMusicVolume.style.right = '20px';
+    divMusicVolume.style.display = 'flex';
+    divMusicVolume.style.alignItems = 'center';
+    divMusicVolume.style.gap = '10px';
+
+    const musicIcon = document.createElement('img');
+    musicIcon.src = '/rocket-starflop/assets/ui/icons/music_icon.png';
+    musicIcon.width = 20;
+    musicIcon.height = 20;
+    musicIcon.style.cursor = 'pointer';
+    musicIcon.onclick = () => {
+      let musicVolume = document.getElementById('music-volume') as HTMLInputElement | null;
+      if(!musicVolume) {
+        return;
+      }
+
+      if(AudioManager.generalVolume > 0) {
+        AudioManager.setVolume(0);
+        musicVolume.value = '0';
+        if (typeof musicVolume.onchange === 'function') {
+          musicVolume.onchange(new Event('change'));
+        }
+        if (typeof musicVolume.oninput === 'function') {
+          musicVolume.oninput(new Event('input'));
+        }
+      }
+      else {
+        AudioManager.setVolume(0.2);
+        musicVolume.value = '20';
+        if (typeof musicVolume.onchange === 'function') {
+          musicVolume.onchange(new Event('change'));
+        }
+        if (typeof musicVolume.oninput === 'function') {
+          musicVolume.oninput(new Event('input'));
+        }
+      }
+    }
+    divMusicVolume.appendChild(musicIcon);
+
+    const musicVolume = document.createElement('input');
+
+    musicVolume.type = 'range';
+    musicVolume.min = '0';
+    musicVolume.max = '20';
+    musicVolume.step = '0.5';
+    musicVolume.value = '20';
+    musicVolume.id = 'music-volume';
+
+
+    const setBackgroundMusicVolume = () => {
+      let min = +musicVolume.min
+      let max = +musicVolume.max
+      let value = +musicVolume.value
+      musicVolume.style.background = `linear-gradient(to right, orange 0%, orange ${(value-min)/(max-min)*100}%, #404040 ${(value-min)/(max-min)*100}%, #404040 100%)`
+    }
+    setBackgroundMusicVolume();
+    musicVolume.oninput = () => {
+      setBackgroundMusicVolume();
+    };
+    musicVolume.onchange = () => {
+      AudioManager.setVolume(Number(musicVolume.value) / 100);
+    }
+
+    const style = document.createElement('style');
+    style.innerHTML = `
+    #music-volume {
+      height: 4px;
+      width: 150px;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+
+    input[type='range']::-webkit-slider-thumb {
+      width: 6px;
+      -webkit-appearance: none;
+      height: 12px;
+      background: orange;
+      cursor: pointer;
+    }
+    `;
+
+    // Append to DOM
+    divMusicVolume.appendChild(musicVolume);
+    document.head.appendChild(style);
+    this.__DOM__.appendChild(divMusicVolume);
+
     // Append to body
     document.body.appendChild(this.__DOM__);
   }

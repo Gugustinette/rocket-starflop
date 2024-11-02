@@ -125,7 +125,8 @@ export function createLargeRock(scene: FScene, options: BTPOptions) {
 
 export function createMountain(scene: FScene, options: BTPOptions) {
     let size = randomInt(50, 100);
-    options.scale = {
+
+    options.scale = options.scale || {
         x: size - 15,
         y: randomInt(70, 110),
         z: size

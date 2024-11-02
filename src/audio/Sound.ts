@@ -105,5 +105,6 @@ Error: ${reason}
 
   set volume(value: number) {
     this.sound.volume = value
+    this.soundCopies.forEach(soundCopy => soundCopy.volume = value)
   }
 }

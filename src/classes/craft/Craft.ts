@@ -8,6 +8,7 @@ import { CraftState, GameState, State } from '../../GameState'
 import {LevelUpPanel} from "../../ui/LevelUpPanel.ts";
 import Meteor from '../meteor/Meteor.ts'
 import {RocketBase} from "../btp/Rocket.ts";
+import {AudioManager} from "../../audio/AudioManager.ts";
 
 export default class Craft extends FGLBToon {
   // Metadata
@@ -64,9 +65,11 @@ export default class Craft extends FGLBToon {
     this.onCollisionWith(Meteor, ({ component }) => {
       const meteor = component as Meteor
       meteor.explode()
+      AudioManager.playHit()
       GameState.health--
     })
     this.onCollisionWith(RocketBase, ({ component }) => {
+      if(GameState.state === State.MENU) return
       const rocket = component as RocketBase
       rocket.explode()
       GameState.health--
