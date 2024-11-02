@@ -3,21 +3,16 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { FModel } from '@fibbojs/3d'
 import type { FModelOptions, FScene } from '@fibbojs/3d'
 
-export class FGLBToon extends FModel {
-  static __CACHED_MESHES__: { [key: string]: THREE.Mesh } = {}
+// Enable caching
+THREE.Cache.enabled = true
 
+export class FGLBToon extends FModel {
   constructor(scene: FScene, options: FModelOptions) {
     super(scene, {
       fileExtension: 'glb',
       ...options,
     })
 
-    if (FGLBToon.__CACHED_MESHES__[this.path]) {
-      this.__MESH__ = FGLBToon.__CACHED_MESHES__[this.path].clone()
-      this.defineMeshTransforms()
-      this.emitOnLoaded()
-    }
-    else {
       // Create GLTF Loader
       const loader = new GLTFLoader()
   
@@ -42,9 +37,6 @@ export class FGLBToon extends FModel {
   
           // Define mesh transforms
           this.defineMeshTransforms()
-
-          // Cache the mesh
-          FGLBToon.__CACHED_MESHES__[this.path] = this.__MESH__.clone() as unknown as THREE.Mesh
   
           // Call the onLoaded Callbacks
           this.emitOnLoaded()
@@ -58,6 +50,5 @@ export class FGLBToon extends FModel {
           console.log(error)
         },
       )
-    }
   }
 }

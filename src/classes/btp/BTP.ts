@@ -1,3 +1,4 @@
+import * as THREE from 'three'
 import {FRigidBodyOptions, FScene} from '@fibbojs/3d'
 import {FGLBToon} from "../util/FGLBToon.ts";
 import {Explosion} from "../../fx/Explosion.ts";
@@ -13,6 +14,7 @@ export interface BTPOptions {
 
 export abstract class BTP extends FGLBToon {
     deleted: boolean = false;
+    maxLifePoints: number;
     lifePoints: number;
     score: number = 10;
 
@@ -24,6 +26,7 @@ export abstract class BTP extends FGLBToon {
         })
 
         this.lifePoints = options.lifePoints ?? 1;
+        this.maxLifePoints = this.lifePoints;
     }
 
     createSensor() {
@@ -31,6 +34,18 @@ export abstract class BTP extends FGLBToon {
 
         this.onCollisionWith(Bullet, ({component}) => {
             this.lifePoints--;
+
+            // Apply color filter to the mesh
+            this.__MESH__?.traverse((child) => {
+                if (child instanceof THREE.Mesh) {
+                    // Take the actual material color
+                    const color = child.material.color
+                    // Make more red
+                    color.r += 0.2 * (this.maxLifePoints - this.lifePoints) / this.maxLifePoints
+                    // Apply the new color
+                    child.material.color = color
+                }
+            })
 
             if(this.lifePoints <= 0) {
                 // Explode the BTP
