@@ -17,6 +17,7 @@ export abstract class BTP extends FGLBToon {
     maxLifePoints: number;
     lifePoints: number;
     score: number = 10;
+    originalMeshRedValues: { [key: string]: number } = {};
 
     protected constructor(scene: FScene, options: BTPOptions) {
         super(scene, {
@@ -37,11 +38,11 @@ export abstract class BTP extends FGLBToon {
 
             // Apply color filter to the mesh
             this.__MESH__?.traverse((child) => {
-                if (child instanceof THREE.Mesh) {
+                if (child instanceof THREE.Mesh && this.originalMeshRedValues[child.uuid] !== undefined) {
                     // Take the actual material color
                     const color = child.material.color
                     // Make more red
-                    color.r += 0.2 * (this.maxLifePoints - this.lifePoints) / this.maxLifePoints
+                    color.r = this.originalMeshRedValues[child.uuid] + Math.max(1 - this.originalMeshRedValues[child.uuid], 0.2) * (1 - this.lifePoints / this.maxLifePoints)
                     // Apply the new color
                     child.material.color = color
                 }
@@ -87,5 +88,15 @@ export abstract class BTP extends FGLBToon {
 
         this.deleted = true;
         this.scene.removeComponent(this);
+    }
+
+    emitOnLoaded(): void {
+        this.__MESH__?.traverse((child) => {
+            if (child instanceof THREE.Mesh) {
+                this.originalMeshRedValues[child.uuid] = child.material.color.r;
+                return;
+            }
+        })
+        super.emitOnLoaded();
     }
 }
