@@ -192,22 +192,16 @@ export class Menu {
       if(AudioManager.generalVolume > 0) {
         AudioManager.setVolume(0);
         musicVolume.value = '0';
-        if (typeof musicVolume.onchange === 'function') {
-          musicVolume.onchange(new Event('change'));
-        }
-        if (typeof musicVolume.oninput === 'function') {
-          musicVolume.oninput(new Event('input'));
-        }
       }
       else {
         AudioManager.setVolume(0.2);
         musicVolume.value = '20';
-        if (typeof musicVolume.onchange === 'function') {
-          musicVolume.onchange(new Event('change'));
-        }
-        if (typeof musicVolume.oninput === 'function') {
-          musicVolume.oninput(new Event('input'));
-        }
+      }
+      if (typeof musicVolume.onchange === 'function') {
+        musicVolume.onchange(new Event('change'));
+      }
+      if (typeof musicVolume.oninput === 'function') {
+        musicVolume.oninput(new Event('input'));
       }
     }
     divMusicVolume.appendChild(musicIcon);
