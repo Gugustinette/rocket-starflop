@@ -3,7 +3,7 @@ import {BTP, BTPOptions} from "./BTP.ts";
 import {randomInt} from "../util/Random.ts";
 
 abstract class RockBase extends BTP {
-    protected constructor(scene: FScene, options: BTPOptions) {
+    protected constructor(scene: FScene, options: BTPOptions, createSensor = true) {
         super(scene, {
             name: options.name ?? '',
             position: options.position,
@@ -13,7 +13,8 @@ abstract class RockBase extends BTP {
 
         this.score = 50;
 
-        this.createSensor()
+        if(createSensor)
+            this.createSensor()
     }
 
     getOptionSensor(): FRigidBodyOptions {
@@ -44,24 +45,24 @@ export class Rock extends RockBase {
 }
 
 export class RockLargeA extends RockBase {
-    constructor(scene: FScene, options: BTPOptions) {
+    constructor(scene: FScene, options: BTPOptions, createSensor = true) {
         super(scene, {
             name: 'rock_largeA',
             position: options.position,
             scale: options.scale,
             lifePoints: options.lifePoints ?? 25
-        })
+        }, createSensor)
     }
 }
 
 export class RockLargeB extends RockBase {
-    constructor(scene: FScene, options: BTPOptions) {
+    constructor(scene: FScene, options: BTPOptions, createSensor = true) {
         super(scene, {
             name: 'rock_largeB',
             position: options.position,
             scale: options.scale,
             lifePoints: options.lifePoints ?? 25
-        })
+        }, createSensor)
     }
 }
 
@@ -135,8 +136,8 @@ export function createMountain(scene: FScene, options: BTPOptions) {
     }
 
     if(randomInt(0,1) === 0) {
-        return new RockLargeA(scene, options);
+        return new RockLargeA(scene, options, false);
     }
 
-    return new RockLargeB(scene, options);
+    return new RockLargeB(scene, options, false);
 }
