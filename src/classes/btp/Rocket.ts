@@ -13,6 +13,8 @@ export abstract class RocketBase extends BTP {
             lifePoints: 3,
         })
 
+        this.score = 20;
+
         this.createSensor()
     }
 

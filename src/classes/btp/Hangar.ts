@@ -8,8 +8,10 @@ export class Hangar extends BTP {
             name: options.name ?? '',
             position: options.position,
             scale: options.scale,
-            lifePoints: 5
+            lifePoints: 3
         })
+
+        this.score = 10;
 
         this.createSensor()
     }

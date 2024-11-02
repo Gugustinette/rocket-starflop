@@ -1,9 +1,7 @@
 import type {FScene} from '@fibbojs/3d'
-import Ground from "../classes/btp/Ground.ts";
 import {Land, LandOptions} from "./Land.ts";
 import {createCorridor} from "../classes/btp/CorridorComplexe.ts";
 import {randomInt} from "../classes/util/Random.ts";
-import {createMountain} from "../classes/btp/Rock.ts";
 
 export default class SpaceBaseLand extends Land {
     xBaseCorridor: number = 0;
@@ -14,27 +12,14 @@ export default class SpaceBaseLand extends Land {
     constructor(scene: FScene, options: LandOptions) {
         super(scene, options);
 
+        this.__ROCKS_MIN_NUMBER__ = 4;
+        this.__ROCKS_MAX_NUMBER__ = 10;
+
         this.addGround();
         this.addCorridor();
-        this.addMountain();
+        this.addRocks();
         this.addCraters();
-    }
-
-    addGround() {
-        let ground = new Ground(this.scene, {
-            position: {
-                x: -this.__LENGTH__,
-                y: 0,
-                z: this.__DEPARTURE__,
-            },
-            scale: {
-                x: this.__LENGTH__,
-                y: 1,
-                z: this.__WIDTH__,
-            }
-        });
-
-        this.parcels.push(ground);
+        this.addExternalMoutains();
     }
 
     addCorridor() {
@@ -57,19 +42,5 @@ export default class SpaceBaseLand extends Land {
         })
 
         this.parcels.push(...components);
-    }
-
-    addMountain() {
-        for (let i = 0; i < randomInt(10, 15); i++) {
-            let mountain = createMountain(this.scene, {
-                position: {
-                    x: randomInt(120, 150) * (randomInt(0, 1) === 0 ? -1 : 1) - 30,
-                    y: 0,
-                    z: this.__DEPARTURE__ + this.__LENGTH__ + randomInt(-200, 200),
-                }
-            });
-
-            this.parcels.push(mountain);
-        }
     }
 }

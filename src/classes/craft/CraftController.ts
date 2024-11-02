@@ -30,6 +30,16 @@ export class CraftController extends FController {
   }
 
   /**
+   * Autoclicker when the mouse is pressed.
+   */
+  autoclicker: boolean = false
+
+  /**
+   * autoclicker counter
+   */
+  autoclickerCounter: number = 0
+
+  /**
    * The cursor instance.
    */
   cursor: CraftCursor
@@ -68,6 +78,16 @@ export class CraftController extends FController {
       this.inputs.left = false
     })
 
+    window.addEventListener('mousedown', () => {
+      this.autoclicker = true
+      this.autoclickerCounter = -100
+    })
+
+    window.addEventListener('mouseup', () => {
+      this.autoclicker = false
+      this.autoclickerCounter = 0
+    })
+
     // Create a cursor instance
     this.cursor = new CraftCursor()
     this.cursor.onClick((clickProgression) => {
@@ -99,6 +119,16 @@ export class CraftController extends FController {
         // The farther the craft is from the endpoint on the right, the faster it moves towards it
         this.component.transform.x += 0.2 * Math.min(1, 2 - this.component.transform.x) * delta * 36
       }
+
+      // Autoclicker
+      if (this.autoclicker) {
+        this.autoclickerCounter += (delta * (900))
+        if (this.autoclickerCounter > 100) {
+          this.cursor.__CALLBACKS_ON_CLICK__.forEach((callback) => callback(this.cursor.mouseProgression))
+          this.autoclickerCounter = 0
+        }
+      }
+
       // Rotate the craft according to the cursor position
       this.component.transform.rotationDegreeY = (1 - this.cursor.mouseProgression.x) * CRAFT_ANGLE - CRAFT_ANGLE / 2
       this.component.transform.rotationDegreeX = (1 - this.cursor.mouseProgression.y) * CRAFT_ANGLE - CRAFT_ANGLE / 2

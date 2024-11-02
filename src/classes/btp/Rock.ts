@@ -8,8 +8,10 @@ abstract class RockBase extends BTP {
             name: options.name ?? '',
             position: options.position,
             scale: options.scale,
-            lifePoints: 10
+            lifePoints: options.lifePoints
         })
+
+        this.score = 20;
 
         this.createSensor()
     }
@@ -36,7 +38,7 @@ export class Rock extends RockBase {
             name: 'rock',
             position: options.position,
             scale: options.scale,
-            lifePoints: 10
+            lifePoints: options.lifePoints ?? 25
         })
     }
 }
@@ -47,7 +49,7 @@ export class RockLargeA extends RockBase {
             name: 'rock_largeA',
             position: options.position,
             scale: options.scale,
-            lifePoints: 10
+            lifePoints: options.lifePoints ?? 25
         })
     }
 }
@@ -58,7 +60,7 @@ export class RockLargeB extends RockBase {
             name: 'rock_largeB',
             position: options.position,
             scale: options.scale,
-            lifePoints: 10
+            lifePoints: options.lifePoints ?? 25
         })
     }
 }
@@ -69,7 +71,7 @@ export class RockCrystals extends RockBase {
             name: 'rock_crystals',
             position: options.position,
             scale: options.scale,
-            lifePoints: 10
+            lifePoints: options.lifePoints ?? 25
         })
     }
 }
@@ -80,7 +82,7 @@ export class RockCrystalsLargeA extends RockBase {
             name: 'rock_crystalsLargeA',
             position: options.position,
             scale: options.scale,
-            lifePoints: 10
+            lifePoints: options.lifePoints ?? 25
         })
     }
 }
@@ -91,7 +93,7 @@ export class RockCrystalsLargeB extends RockBase {
             name: 'rock_crystalsLargeB',
             position: options.position,
             scale: options.scale,
-            lifePoints: 10
+            lifePoints: options.lifePoints ?? 25
         })
     }
 }
@@ -104,20 +106,20 @@ export function createLargeRock(scene: FScene, options: BTPOptions) {
         z: size * randomInt(1, 5)
     }
 
-    let random = randomInt(0, 5);
-    if(random === 0) {
+    let random = randomInt(0, 8);
+    if(random === 0 || random == 1) {
         return new RockLargeA(scene, options);
     }
-    if(random === 1) {
+    if(random === 3 || random == 4) {
         return new RockLargeB(scene, options);
     }
-    if(random === 2) {
+    if(random === 5) {
         return new RockCrystals(scene, options);
     }
-    if(random === 3) {
+    if(random === 6) {
         return new RockCrystalsLargeA(scene, options);
     }
-    if(random === 4) {
+    if(random === 7) {
         return new RockCrystalsLargeB(scene, options);
     }
     return new Rock(scene, options);
