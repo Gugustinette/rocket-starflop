@@ -2,7 +2,7 @@
 
 ![Rocket Starflop](./public/logo.png)
 
-Rocket Starflop est un jeu d'arcade shoot'em up en 3D développé avec le moteur [Fibbo](https://fibbo.dev).
+Rocket Starflop est un jeu d'arcade shoot'em up en 3D développé avec le moteur [Fibbo](https://fibbo.dev), lors de la [game jam organisé par Benjamin Code](https://x.com/benjamincode/status/1847283362370908418).
 
 Pour jouer, rendez-vous sur [https://gugustinette.github.io/rocket-starflop/](https://gugustinette.github.io/rocket-starflop/).
 
