@@ -58,6 +58,22 @@ export function loadGame(scene: Scene) {
         }
     });
 
+    // If konami code is entered
+    let konamiCode = '';
+    const konami = '38384040373937396665';
+    document.addEventListener('keydown', (event) => {
+        konamiCode += event.keyCode;
+        if (konamiCode === konami) {
+            GameState.konamiMode = true;
+            konamiCode = '';
+        }
+
+        // Reset if the last key is not part of the konami code
+        if (!konami.startsWith(konamiCode)) {
+            konamiCode = '';
+        }
+    });
+
     scene.onFrame((delta: number) => {
         landManager.frame(delta);
     })

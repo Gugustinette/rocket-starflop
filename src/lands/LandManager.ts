@@ -4,6 +4,8 @@ import {FScene} from '@fibbojs/3d'
 import {Queue} from "../classes/util/Queue.ts";
 import {randomInt} from "../classes/util/Random.ts";
 import SpaceBaseLand from "./SpaceBaseLand.ts";
+import {GameState} from "../GameState.ts";
+import KonamiLand from "./KonamiLand.ts";
 
 export class LandManager {
     scene: FScene;
@@ -37,6 +39,13 @@ export class LandManager {
     }
 
     generate(z: number) {
+        if(GameState.konamiMode) {
+            this.add(new KonamiLand(this.scene, {
+                position: this.__SIZE__,
+                offset: z
+            }));
+            return;
+        }
         if(randomInt(0, 10) >= 7) {
             this.add(new SpaceBaseLand(this.scene, {
                 position: this.__SIZE__,

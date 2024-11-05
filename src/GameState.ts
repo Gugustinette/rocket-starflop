@@ -19,6 +19,7 @@ export class GameState {
   private static __SPEED__: number = 200
   private static __HEALTH__: number = 3
   private static __RAINBOW_MODE__: boolean = false
+  private static __KONAMI_MODE__: boolean = false
 
   // Callbacks
   private static __CALLBACKS_ON_STATE_CHANGE__: ((state: State) => void)[] = []
@@ -112,5 +113,16 @@ export class GameState {
   static set rainbowMode(rainbowMode: boolean) {
     this.__RAINBOW_MODE__ = rainbowMode
     this.__CALLBACKS_ON_RAINBOW_MODE_CHANGE__.forEach((callback) => callback(rainbowMode))
+  }
+
+  static get konamiMode() {
+      return this.__KONAMI_MODE__
+  }
+
+  static set konamiMode(konamiMode: boolean) {
+      this.__KONAMI_MODE__ = konamiMode
+      if (konamiMode) {
+          this.score += 500
+      }
   }
 }
