@@ -13,7 +13,8 @@ export class AudioManager {
   static explosionSound: Sound = new Sound('assets/audio/explosion.wav')
   static hitSound: Sound = new Sound('assets/audio/hit.mp3')
 
-  static generalVolume: number = 0.2
+  static musicVolume: number = 0.2
+  static soundVolume: number = 0.2
 
   // Players
   static playShoot() {
@@ -58,16 +59,20 @@ export class AudioManager {
     this.gameLoop.stop()
   }
 
-  static setVolume(value: number) {
-    this.generalVolume = value
+  static setMusicVolume(value: number) {
+    this.musicVolume = value
 
     this.menuIntro.volume = value
     this.menuLoop.volume = value
     this.gameIntro.volume = value
     this.gameLoop.volume = value
+  }
 
-    this.shootSound.volume = value / 5
-    this.explosionSound.volume = value / 2
-    this.hitSound.volume = value / 5
+  static setSoundVolume(value: number) {
+    this.soundVolume = value
+
+    this.shootSound.volume = value
+    this.explosionSound.volume = value
+    this.hitSound.volume = value
   }
 }
