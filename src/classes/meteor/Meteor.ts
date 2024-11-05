@@ -14,14 +14,14 @@ export default class Meteor extends BTP {
       z: -200,
     }
     const endPosition = {
-      x: (startPosition.x + 40) / 80 * 20 - 10,
-      y: 4,
-      z: 30,
+      x: (startPosition.x + 40) / 80 * 10 - 5,
+      y: 8,
+      z: 20,
     }
     super(scene, {
       name: 'meteor_detailed',
       position: startPosition,
-      scale: { x: 10, y: 10, z: 10 },
+      scale: { x: 8, y: 8, z: 8 },
       lifePoints: 6,
     })
 
