@@ -5,8 +5,6 @@ import { WindEffect } from './fx/WindEffect';
 // Post processing
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
-import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
 import { RenderPixelatedPass } from 'three/addons/postprocessing/RenderPixelatedPass.js';
 import { GameState } from './GameState';
 
@@ -86,10 +84,6 @@ export class Scene extends FScene {
     this.composer.addPass(new OutputPass());
     // Add pixelated pass
     this.composer.addPass(new RenderPixelatedPass( 1.5, this.scene, this.camera.__CAMERA__ ));
-    // Add FXAA pass
-    const effectFXAA = new ShaderPass( FXAAShader );
-    effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
-    this.composer.addPass( effectFXAA );
 
     // Render the composer on each frame
     this.onFrame(() => {
