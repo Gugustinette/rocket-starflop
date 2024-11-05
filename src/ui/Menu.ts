@@ -338,7 +338,6 @@ export class Menu {
       if(!soundVolume) {
         return;
       }
-      console.log(soundVolume.value);
 
       if(AudioManager.soundVolume > 0) {
         AudioManager.setSoundVolume(0);
