@@ -6,6 +6,7 @@ import { WindEffect } from './fx/WindEffect';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { RenderPixelatedPass } from 'three/addons/postprocessing/RenderPixelatedPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { GameState } from './GameState';
 
 export class Scene extends FScene {
@@ -84,6 +85,18 @@ export class Scene extends FScene {
     this.composer.addPass(new OutputPass());
     // Add pixelated pass
     this.composer.addPass(new RenderPixelatedPass( 1.5, this.scene, this.camera.__CAMERA__ ));
+    
+    // Add bloom pass
+    const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1, 0.2, 0.1 );
+    GameState.onRainbowModeChange((rainbow) => {
+      if (rainbow) {
+        // Add bloom pass
+        this.composer.addPass(bloomPass);
+      } else {
+        // Remove bloom pass
+        this.composer.removePass(bloomPass);
+      }
+    })
 
     // Render the composer on each frame
     this.onFrame(() => {
