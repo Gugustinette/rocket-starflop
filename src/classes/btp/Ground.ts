@@ -8,5 +8,6 @@ export default class Ground extends BTP {
             position: options.position,
             scale: options.scale,
         })
+        this.__IS_GROUND__ = true
     }
 }
