@@ -75,6 +75,7 @@ export class FGLBToon extends FModel {
       })
     }
     const runRainbowMode = () => {
+      colorMesh()
       this.onLoaded(() => {
         colorMesh()
       })
