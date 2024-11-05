@@ -7,6 +7,7 @@ import { Scene } from "./Scene.ts";
 import { fDebug } from "@fibbojs/devtools";
 import { AudioManager } from "./audio/AudioManager.ts";
 import { GameState, State } from "./GameState.ts";
+import {SecretPanel} from "./ui/SecretPanel.ts";
 
 export function loadGame(scene: Scene) {
     // Create the craft
@@ -46,6 +47,7 @@ export function loadGame(scene: Scene) {
                         GameState.score += 10000;
                     }
                 });
+                new SecretPanel('RAINBOW MODE');
                 hasInteractedColorMode = true;
             }, 5000);
             isPressingF = true;
@@ -65,6 +67,7 @@ export function loadGame(scene: Scene) {
         konamiCode += event.keyCode;
         if (konamiCode === konami) {
             GameState.konamiMode = true;
+            new SecretPanel('KONAMI MODE');
             konamiCode = '';
         }
 
