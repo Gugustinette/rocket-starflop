@@ -16,7 +16,7 @@ export class GameState {
   private static __STATE__: State = State.MENU
   private static __CRAFT_STATE__: CraftState = CraftState.WAITING
   private static __SCORE__: number = 0
-  private static __SPEED__: number = 100
+  private static __SPEED__: number = 200
   private static __HEALTH__: number = 3
   private static __RAINBOW_MODE__: boolean = false
 
@@ -79,7 +79,7 @@ export class GameState {
   static set score(score: number) {
     this.__SCORE__ = score
     this.__CALLBACKS_ON_SCORE_CHANGE__.forEach((callback) => callback(score))
-    this.speed = 100 + score / 8
+    this.speed = 200 + Math.min(score / 8, 2000) + Math.log(score) * 10
   }
 
   static get speed() {
