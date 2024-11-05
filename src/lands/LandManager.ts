@@ -59,7 +59,7 @@ export class LandManager {
             });
 
             let lastLand = this.lands.peek();
-            if (lastLand && lastLand.getZ() >= -1) {
+            if (lastLand && lastLand.getZ() >= -150) {
                 let land = this.lands.remove();
                 if (land) {
                     land.delete();
