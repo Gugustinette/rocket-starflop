@@ -8,6 +8,7 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { FXAAShader } from 'three/addons/shaders/FXAAShader.js';
 import { RenderPixelatedPass } from 'three/addons/postprocessing/RenderPixelatedPass.js';
+import { GameState } from './GameState';
 
 export class Scene extends FScene {
   declare composer: EffectComposer;
@@ -56,9 +57,20 @@ export class Scene extends FScene {
     const texture = loader.load(
       '/rocket-starflop/assets/sky.jpg',
       () => {
-        texture.mapping = THREE.EquirectangularReflectionMapping;
-        texture.colorSpace = THREE.SRGBColorSpace;
-        this.scene.background = texture;
+        // Repeat the texture
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set(1, 1);
+        // Create the skybox
+        const geometry = new THREE.SphereGeometry(500, 60, 40);
+        const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.BackSide });
+        const skybox = new THREE.Mesh(geometry, material);
+        // Move the images each frame
+        this.onFrame((delta) => {
+          skybox.rotation.x += delta * 0.00005 * GameState.speed;
+          skybox.rotation.y += delta * 0.00001 * GameState.speed;
+        })
+        this.scene.add(skybox);
       });
     
     // Wind effect
