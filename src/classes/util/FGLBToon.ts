@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { FModel } from '@fibbojs/3d'
 import type { FModelOptions, FScene } from '@fibbojs/3d'
+import { GameState } from '../../GameState'
 
 // Enable caching
 THREE.Cache.enabled = true
@@ -50,5 +51,38 @@ export class FGLBToon extends FModel {
           console.log(error)
         },
       )
+
+    // Rainbow mode
+    let hasActivatedRainbowMode = false;
+    const colorMesh = () => {
+      this.__MESH__?.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          // Randomize the material color
+          const color = child.material.color
+          color.r = Math.random()
+          color.g = Math.random()
+          color.b = Math.random()
+          child.material.color = color
+        }
+      })
+    }
+    const runRainbowMode = () => {
+      this.onLoaded(() => {
+        colorMesh()
+      })
+      setInterval(() => {
+        colorMesh()
+      }, 500)
+    }
+    if (GameState.rainbowMode) {
+        runRainbowMode();
+        hasActivatedRainbowMode = true;
+    }
+    GameState.onRainbowModeChange((rainbowMode) => {
+        if (rainbowMode && !hasActivatedRainbowMode) {
+            runRainbowMode();
+            hasActivatedRainbowMode = true;
+        }
+    })
   }
 }

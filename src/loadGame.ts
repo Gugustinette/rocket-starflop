@@ -25,6 +25,38 @@ export function loadGame(scene: Scene) {
             hasInteracted = true;
         }
     });
+    // Color mode
+    let hasInteractedColorMode = false;
+    let isPressingF = false;
+    let rainbowInterval: number;
+    // When pressing the f key for 5 seconds
+    document.addEventListener('keydown', (event) => {
+        if ((event.key === 'f' || event.key === 'F') && !hasInteractedColorMode && !isPressingF) {
+            rainbowInterval = setInterval(() => {
+                /**
+                 * Turn on the rainbow mode
+                 */
+                AudioManager.stopGame();
+                AudioManager.stopMenu();
+                AudioManager.playRainbowMode();
+                GameState.rainbowMode = true;
+                GameState.score += 10000;
+                GameState.onStateChange((state) => {
+                    if (state === State.PLAYING) {
+                        GameState.score += 10000;
+                    }
+                });
+                hasInteractedColorMode = true;
+            }, 5000);
+            isPressingF = true;
+        }
+    });
+    document.addEventListener('keyup', (event) => {
+        if (event.key === 'f' || event.key === 'F') {
+            clearInterval(rainbowInterval);
+            isPressingF = false;
+        }
+    });
 
     scene.onFrame((delta: number) => {
         landManager.frame(delta);

@@ -8,6 +8,8 @@ export class AudioManager {
   //    Game
   static gameIntro: Sound = new Sound('assets/audio/game-intro.mp3')
   static gameLoop: Sound = new Sound('assets/audio/game-loop.mp3')
+  //    Rainbow mode
+  static rainbowMode: Sound = new Sound('assets/audio/deaf-kev-invincible.mp3')
   // SFX
   static shootSound: Sound = new Sound('assets/audio/shoot.wav')
   static explosionSound: Sound = new Sound('assets/audio/explosion.wav')
@@ -59,11 +61,21 @@ export class AudioManager {
     this.gameLoop.stop()
   }
 
+  static playRainbowMode() {
+    this.rainbowMode.loop = true
+    this.rainbowMode.play()
+  }
+
+  static stopRainbowMode() {
+    this.rainbowMode.stop()
+  }
+
   static setMusicVolume(value: number) {
     this.musicVolume = value
 
     this.menuIntro.volume = value
     this.menuLoop.volume = value
+    this.rainbowMode.volume = value
     this.gameIntro.volume = value
     this.gameLoop.volume = value
   }

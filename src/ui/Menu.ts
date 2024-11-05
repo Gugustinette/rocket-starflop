@@ -41,7 +41,8 @@ export class Menu {
         GameState.state = State.PLAYING;
         GameState.craftState = CraftState.LAUNCHING;
         AudioManager.stopMenu();
-        AudioManager.playGame();
+        if (!GameState.rainbowMode)
+          AudioManager.playGame();
         this.__DOM__.style.opacity = '0';
         // Wait for the animation to end to set display to none
         setTimeout(() => {
@@ -101,7 +102,8 @@ export class Menu {
     GameState.onStateChange((state) => {
       // Show menu and play menu music
       if (state === State.MENU) {
-        AudioManager.playMenu();
+        if (!GameState.rainbowMode)
+          AudioManager.playMenu();
         this.__DOM__.style.display = 'flex';
         this.__DOM__.style.opacity = '1';
       } else if (state === State.GAME_OVER) {

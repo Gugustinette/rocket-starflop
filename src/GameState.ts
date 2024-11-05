@@ -18,6 +18,7 @@ export class GameState {
   private static __SCORE__: number = 0
   private static __SPEED__: number = 100
   private static __HEALTH__: number = 3
+  private static __RAINBOW_MODE__: boolean = false
 
   // Callbacks
   private static __CALLBACKS_ON_STATE_CHANGE__: ((state: State) => void)[] = []
@@ -25,6 +26,7 @@ export class GameState {
   private static __CALLBACKS_ON_SCORE_CHANGE__: ((score: number) => void)[] = []
   private static __CALLBACKS_ON_SPEED_CHANGE__: ((speed: number) => void)[] = []
   private static __CALLBACKS_ON_HEALTH_CHANGE__: ((health: number) => void)[] = []
+  private static __CALLBACKS_ON_RAINBOW_MODE_CHANGE__: ((rainbow: boolean) => void)[] = []
 
   // Methods
   static onStateChange(callback: (state: State) => void) {
@@ -45,6 +47,10 @@ export class GameState {
 
   static onHealthChange(callback: (health: number) => void) {
     this.__CALLBACKS_ON_HEALTH_CHANGE__.push(callback)
+  }
+
+  static onRainbowModeChange(callback: (rainbow: boolean) => void) {
+    this.__CALLBACKS_ON_RAINBOW_MODE_CHANGE__.push(callback)
   }
 
   // Getters & setters
@@ -97,5 +103,14 @@ export class GameState {
       this.craftState = CraftState.DESTROYING
       this.speed = 0
     }
+  }
+
+  static get rainbowMode() {
+    return this.__RAINBOW_MODE__
+  }
+
+  static set rainbowMode(rainbowMode: boolean) {
+    this.__RAINBOW_MODE__ = rainbowMode
+    this.__CALLBACKS_ON_RAINBOW_MODE_CHANGE__.forEach((callback) => callback(rainbowMode))
   }
 }
