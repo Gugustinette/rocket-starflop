@@ -36,11 +36,11 @@ export class Scene extends FScene {
       position: { x: 100, y: 50, z: 0 },
       color: 0xF9F6FF,
       intensity: 3,
-      shadowQuality: 12,
+      shadowQuality: 10,
     })
     // Expand the light to cover the whole scene
     // @ts-ignore
-    sun.__LIGHT__.shadow.camera.right = 1000
+    sun.__LIGHT__.shadow.camera.right = 450
     // Add ambient light
     new FAmbientLight(this, {
       color: 0x403B50,
