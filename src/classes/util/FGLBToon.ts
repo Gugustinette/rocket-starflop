@@ -8,6 +8,8 @@ import { GameState } from '../../GameState'
 THREE.Cache.enabled = true
 
 export class FGLBToon extends FModel {
+  __IS_GROUND__ = false
+
   constructor(scene: FScene, options: FModelOptions) {
     super(scene, {
       fileExtension: 'glb',
@@ -59,20 +61,27 @@ export class FGLBToon extends FModel {
         if (child instanceof THREE.Mesh) {
           // Randomize the material color
           const color = child.material.color
-          color.r = Math.random()
-          color.g = Math.random()
-          color.b = Math.random()
+          if (this.__IS_GROUND__) {
+            color.r = Math.min(Math.random(), 0.4)
+            color.g = Math.min(Math.random(), 0.4)
+            color.b = Math.min(Math.random(), 0.1)
+          } else {
+            color.r = Math.min(Math.random(), 0.9)
+            color.g = Math.min(Math.random(), 0.9)
+            color.b = Math.min(Math.random(), 0.9)
+          }
           child.material.color = color
         }
       })
     }
     const runRainbowMode = () => {
+      colorMesh()
       this.onLoaded(() => {
         colorMesh()
       })
       setInterval(() => {
         colorMesh()
-      }, 500)
+      }, 1000)
     }
     if (GameState.rainbowMode) {
         runRainbowMode();
