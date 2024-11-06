@@ -61,7 +61,7 @@ export class Scene extends FScene {
         texture.wrapT = THREE.RepeatWrapping;
         texture.repeat.set(1, 1);
         // Create the skybox
-        const geometry = new THREE.SphereGeometry(500, 60, 40);
+        const geometry = new THREE.SphereGeometry(600, 60, 40);
         const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.BackSide });
         const skybox = new THREE.Mesh(geometry, material);
         // Move the images each frame
